@@ -1,6 +1,6 @@
 # VAT Engine SDK-JS — implementation plan
 
-**Status:** JS-00 verified · JS-01 verified · 2026-11-28
+**Status:** JS-00 verified · JS-01 verified · JS-02 in progress · 2026-11-28
 **Repository:** `VAT-Engine/sdk-js` · **Intended package:** `@vat-engine/sdk` (namespace pending)  
 **Requirements:** Approved Shared SDK Standard v1.0, reflected in the [public requirements extract](../contract/REQUIREMENTS.md) and the [pinned public contract](../contract/README.md).
 **Release model:** Independent Gate A for the direct HTTP client and Gate B for optional durable delivery, approved on 2026-11-28. Publication and hosted acceptance have separate evidence and authorization.
@@ -59,6 +59,8 @@ At the beginning of every task, check the branch, commit, and working tree. Read
 
 **Objective:** Choose package and toolchain settings and verify precise representations.  
 **Dependencies:** JS-01 contract and conformance corpus.
+
+Review the [proposed Node.js package foundation](decisions/0001-node-package-foundation.md) and its prototype evidence before adopting the toolchain or finalizing public types.
 
 - [ ] Approve supported Node versions and package formats (initial proposals Node 22+ and ESM/CJS; verify maintained runtime versions and consumers), toolchain, compiler settings, package manager, export strategy and minimal dependencies.
 - [ ] Prototype exact JSON representation before fixing public types: select tested lossless parser/serializer, define int64 public API (`bigint` or other approved representation), reject unsafe number inputs, preserve string amounts and ordinary floats. Verify generated type overrides match runtime behavior.
@@ -179,7 +181,7 @@ Each checklist records scope and acceptance. Update this table after each milest
 | --- | --- | --- | --- |
 | JS-00 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28. Verified 19 representative local excludes, the private/local instruction match, Git index/history exclusions and Git/npm archive boundaries. |
 | JS-01 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28 on the merged SDK revision and its reviewed upstream handoff. A Git archive of the accepted revision verified 55 operations, 959 local references, 22 cases with 33 exchanges and 14 supply-reference cases. Seven tooling tests passed and two offline assemblies matched byte-for-byte. The approved operation matrix matched all 55 method/path identities. |
-| JS-02 | Planned | — / — | Runtime and format, exact integer representation, dependencies and toolchain decisions pending. |
+| JS-02 | In progress | [Architecture proposal](decisions/0001-node-package-foundation.md) / — | Node 22/24/26, a shared ESM entry, exact JSON, generation and pack boundaries tested in a temporary prototype. Architecture approval, package implementation and CI acceptance remain pending. |
 | JS-03 | Planned | — / — | Transport, API encoding and normal entry-point test evidence pending. |
 | JS-04 | Planned | — / — | Auth, replay and fail-closed results pending. Strict context claim requires authenticated hosted acceptance. |
 | JS-05 | Planned | — / — | Operation methods, coverage and examples pending. |
