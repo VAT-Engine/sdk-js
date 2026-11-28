@@ -1,6 +1,6 @@
 # JS-02 Node.js package foundation
 
-**Status:** Proposed for approval · 2026-11-28
+**Status:** Accepted · 2026-11-28 · [Architecture review #8](https://github.com/VAT-Engine/sdk-js/pull/8)
 
 **Inputs:** [Shared requirements](../../contract/REQUIREMENTS.md), [approved CORE pin](../../contract/manifest.json), [operation catalog](../../contract/operations.json), and [synthetic conformance corpus](../../contract/fixtures/README.md).
 
@@ -37,4 +37,9 @@
 - Repeated type generation produced identical bytes on Node 22 and 26. The output covered all 55 method/path identities, including 13 without operation IDs. TypeScript checked a numeric supply revision as `bigint`, a quoted receipt revision as `string`, and the optional nullable ECB rate as `number | null | undefined`. The private native JSON typing compiled and preserved an unsafe magnitude on both Node lines.
 - A temporary package packed with npm 11.20.0. Its dry run and actual pack reported identical allowlisted contents and excluded synthetic local files. An independent installation passed `import` and `require()` smoke tests on all six Node versions. The mixed-loader test shared export identity and blocked an internal deep import. TS 5.9.3 compiled both `.mts` and `.cts` consumers. ESLint ran on Node 22.13.0 and 26.13.1.
 
-These experiments establish feasibility for the decision. JS-02 acceptance still requires the approved package skeleton, complete precision mapping, public-only CI and clean consumer tests of the SDK's own archive.
+## Implemented wire mapping
+
+- Generation verifies the pinned OpenAPI digest, resolves local references and compares its method/path and media inventory to JS-01. It generates internal types and conversion metadata from the same artifact. YAML is a development-only dependency and reads integer constraints as exact integers.
+- The pin contains 273 numeric declarations. It maps 95 int64s to `bigint` and 14 int32s to signed 32-bit numbers. The 147 unformatted integers must fit in a safe integer number, and the 17 doubles map to finite binary64 numbers. The mapping includes parameter and header schemas as well as bodies. An unsafe value at an unformatted integer field is rejected. A wider representation for such a field requires reviewing and updating the upstream contract.
+- Unknown additive response data retains its keys, structure and scalar values. Safe plain integers remain numbers. Other numeric lexemes are kept as opaque native raw JSON values so their exact text survives serialization. They carry no declared financial semantics. The request encoder rejects caller-supplied raw JSON and applies numeric bounds at declared fields. Neither direction modifies globals or prototypes.
+- The codec and generated schemas stay internal. The package root exports `toInt64` and `Int64Input`. The local tarball contains the JS and declarations needed by that entry plus metadata, README and license. Response status and media selection preserve the distinction between structured JSON and raw attachments.
