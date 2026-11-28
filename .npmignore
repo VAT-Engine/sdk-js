@@ -1,0 +1,22 @@
+# Local agent instructions, configuration, and memory
+AGENTS.md
+AGENTS.override.md
+.codex/
+.agents/
+.vscode/
+.mcp.json
+.mcp.local.json
+mcp.json
+*.code-workspace
+MEMORY.md
+memory.jsonl
+memory.sqlite*
+.npmrc
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local environment files and package archives
+.env
+.env.*
+*.tgz

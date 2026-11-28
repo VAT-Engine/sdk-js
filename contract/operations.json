@@ -1,0 +1,5556 @@
+{
+  "formatVersion": 1,
+  "operations": {
+    "GET /health": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "GET /health",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "fixtures": [
+        "public-health"
+      ],
+      "operationId": "health",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {}
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "534120ae38b91347e13bb7365b64a9668dcf29cfd310dbe884708676749c6639"
+    },
+    "GET /ready": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "GET /ready",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "fixtures": [],
+      "operationId": "ready",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {}
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "503": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "f1f94c931346afa07953f9b443e016e8ab69d42c1bbeab65fba629b1474e0bbf"
+    },
+    "GET /v1/auth/context": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/auth/context",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [
+        "auth-context-discovery"
+      ],
+      "operationId": "getAuthContext",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Cache-Control",
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "421": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "503": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only",
+        "calculate-only",
+        "classification-resolve"
+      ],
+      "wireSha256": "c5f42937be79da0f871028ae1bfd9130678202edf95fdaf8ab7582cf25c719dd"
+    },
+    "GET /v1/classification-codes/{scheme}/{code}": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "GET /v1/classification-codes/{scheme}/{code}",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "path:code": {
+            "required": true,
+            "schema": {
+              "maxLength": 24,
+              "type": "string"
+            }
+          },
+          "path:scheme": {
+            "required": true,
+            "schema": {
+              "enum": [
+                "cn",
+                "cpa"
+              ],
+              "type": "string"
+            }
+          },
+          "query:catalog_version": {
+            "required": false,
+            "schema": {
+              "maxLength": 40,
+              "type": "string"
+            }
+          },
+          "query:legal_date": {
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Cache-Control"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [],
+          "media": {}
+        },
+        "503": {
+          "headers": [],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "b938e8fadfeecb503b76fbafe169991985300e46672205c636af12a543b763e7"
+    },
+    "GET /v1/compliance/threshold-status": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/compliance/threshold-status",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "complianceThresholdStatus",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "b4a996512f707b6218a796c7e931a3ec2854d6460958db999515a6c29a6a4c3f"
+    },
+    "GET /v1/information/customer-vat/article59c": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/information/customer-vat/article59c",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:year": {
+            "required": true,
+            "schema": {
+              "minimum": 2000,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "fa6bb09a1387ff10e0dd82dce442fa5e82890c70274ac7411398a96f106e6dd4"
+    },
+    "GET /v1/information/customer-vat/attention": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/information/customer-vat/attention",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "9a7244ddc9225c9802a52912433eea2a80ef26542b3b1f0064a6a5fa4270968f"
+    },
+    "GET /v1/information/customer-vat/events": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/information/customer-vat/events",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [
+        "customer-events-cursor-omitted"
+      ],
+      "operationId": null,
+      "pagination": {
+        "end": [
+          "omitted"
+        ],
+        "parameter": "cursor",
+        "response": "next_cursor"
+      },
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:country": {
+            "required": false,
+            "schema": {
+              "pattern": "^[A-Za-z]{2}$",
+              "type": "string"
+            }
+          },
+          "query:cursor": {
+            "required": false,
+            "schema": {
+              "maxLength": 512,
+              "type": "string"
+            }
+          },
+          "query:event_id": {
+            "required": false,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          "query:limit": {
+            "required": false,
+            "schema": {
+              "default": 200,
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "query:pending_only": {
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          "query:period": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "abca427fc56ad35a7c1a96a1ddd6a347bf7e268abf65e26cb7f1f1d4205534f4"
+    },
+    "GET /v1/information/customer-vat/ioss": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/information/customer-vat/ioss",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:format": {
+            "required": false,
+            "schema": {
+              "enum": [
+                "csv",
+                "json"
+              ],
+              "type": "string"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Content-Disposition",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json",
+            "text/csv": "bytes"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "05aa53ea4a50cc40247568952e82df8c460ca88e763edbf1a79a0afe7641e01d"
+    },
+    "GET /v1/information/customer-vat/oss": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/information/customer-vat/oss",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:format": {
+            "required": false,
+            "schema": {
+              "enum": [
+                "csv",
+                "json"
+              ],
+              "type": "string"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^[0-9]{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Content-Disposition",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json",
+            "text/csv": "bytes"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "d23c57ed040fdbffd88aaa62cfea590cba000130034a0d52f57e2addd0b37391"
+    },
+    "GET /v1/information/customer-vat/rules": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/information/customer-vat/rules",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [
+        "service-empty-dispatch"
+      ],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "e0a706bcfaab818790ffede8529a491b3c98cf7b212b4b978591b6d67aa87d58"
+    },
+    "GET /v1/information/vat": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/information/vat",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "lookupInformationalVAT",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:catalog_version": {
+            "required": false,
+            "schema": {
+              "maxLength": 40,
+              "type": "string"
+            }
+          },
+          "query:code": {
+            "required": true,
+            "schema": {
+              "maxLength": 24,
+              "type": "string"
+            }
+          },
+          "query:country": {
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Z]{2}$",
+              "type": "string"
+            }
+          },
+          "query:date": {
+            "required": true,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          "query:scheme": {
+            "required": true,
+            "schema": {
+              "enum": [
+                "cn",
+                "cpa"
+              ],
+              "type": "string"
+            }
+          },
+          "query:snapshot_id": {
+            "required": false,
+            "schema": {
+              "pattern": "^[1-9][0-9]*$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "e87b0363e814edd68ad7857c61d4614fce4cadbb1b68696ee47e938b614d09e7"
+    },
+    "GET /v1/reports/country-vat-breakdown": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/country-vat-breakdown",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "getUnionOSSCountryVATBreakdown",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "d65a3cf082204f2b78312b657ff57ad75eb7d2cfe9affd3e2a5f88c75aa3b543"
+    },
+    "GET /v1/reports/country-vat-breakdown/export": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/country-vat-breakdown/export",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "exportUnionOSSCountryVATBreakdown",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:format": {
+            "required": true,
+            "schema": {
+              "enum": [
+                "csv",
+                "json"
+              ],
+              "type": "string"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Content-Disposition",
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json",
+            "text/csv": "bytes"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "e1c607cf5cc3b437fba4644deac93fb3678ede54ff81db151ad4b65eb825dd75"
+    },
+    "GET /v1/reports/filing-prep": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/filing-prep",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "getOSSIOSSFilingPrepWorkspace",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "4e17ef0f4a0a75b95b5e598a8f935d914349bbca78077c9396b6195d1961e9fc"
+    },
+    "GET /v1/reports/locked-return-periods/union-oss": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/locked-return-periods/union-oss",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "listLockedUnionOSSReturnPeriods",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "a38162ebf3d3f863e887f330498201ff4ba31db42dbd7e3feb999fa017e4feda"
+    },
+    "GET /v1/reports/locked-return-periods/union-oss/exports/{exportID}": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/locked-return-periods/union-oss/exports/{exportID}",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [
+        "json-archive-bytes"
+      ],
+      "operationId": "downloadLockedUnionOSSExportArtifact",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "path:exportID": {
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Content-Disposition",
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "bytes",
+            "text/csv": "bytes"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "61683bdb13a9f6b180d9818fdfeeec959fc79c767d791edcb03ed75428df8e6d"
+    },
+    "GET /v1/reports/multi-jurisdiction": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/multi-jurisdiction",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "getOSSIOSSMultiJurisdictionPreview",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "c58ea3beddda42eb05502c17c516024c99725f944a84c1bc928a7d18d7839165"
+    },
+    "GET /v1/reports/oss-accountant-report": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/oss-accountant-report",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "getUnionOSSAccountantReport",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "bfc67d50e28b278cc485d68316c76e99060cde2df87194f9f6f413f4de9e61ee"
+    },
+    "GET /v1/reports/oss-quarterly-summary": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/oss-quarterly-summary",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "getUnionOSSQuarterlySummary",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "cf6fa3394f5550170d5fc8742376e38a7780c9de6846a49f35127c7308d3d4ef"
+    },
+    "GET /v1/reports/oss-quarterly-summary/export": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/reports/oss-quarterly-summary/export",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "exportUnionOSSQuarterlySummary",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:format": {
+            "required": true,
+            "schema": {
+              "enum": [
+                "csv",
+                "json"
+              ],
+              "type": "string"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Content-Disposition",
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json",
+            "text/csv": "bytes"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "a9fa619804526e15369db3409155349c4771267321b14a3f1d23e358727482fc"
+    },
+    "GET /v1/sources": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/sources",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "listSources",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "49a06388a97184cd1815605e08837173948bf4d97f3209ce8b735583c61bf9ff"
+    },
+    "GET /v1/sources/unknown": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/sources/unknown",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "listUnknownSources",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:limit": {
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 500,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "0bf6a90a70b6a39aa1901a5bb0f78089de41c71af08c902b062863d9144cf16b"
+    },
+    "GET /v1/supplies": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/supplies",
+      "effects": "Returns documented data without a business write.",
+      "environmentRejection": "operational_key_required",
+      "environments": [
+        "operational"
+      ],
+      "fixtures": [],
+      "operationId": "listCommittedSupplyEvents",
+      "pagination": {
+        "end": [
+          "null"
+        ],
+        "parameter": "cursor",
+        "response": "next_cursor"
+      },
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:classification_status": {
+            "required": false,
+            "schema": {
+              "enum": [
+                "classified",
+                "excluded",
+                "needs_review"
+              ],
+              "type": "string"
+            }
+          },
+          "query:country": {
+            "required": false,
+            "schema": {
+              "pattern": "^[A-Z]{2}$",
+              "type": "string"
+            }
+          },
+          "query:currency": {
+            "required": false,
+            "schema": {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            }
+          },
+          "query:cursor": {
+            "required": false,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          "query:event_id": {
+            "required": false,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          "query:from": {
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          "query:limit": {
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "query:order_id": {
+            "required": false,
+            "schema": {
+              "maxLength": 256,
+              "type": "string"
+            }
+          },
+          "query:rate_category": {
+            "required": false,
+            "schema": {
+              "enum": [
+                "standard",
+                "reduced",
+                "super_reduced",
+                "zero",
+                "parking",
+                "exempt",
+                "unknown"
+              ],
+              "type": "string"
+            }
+          },
+          "query:source_id": {
+            "required": false,
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          "query:source_profile_id": {
+            "required": false,
+            "schema": {
+              "pattern": "^[1-9][0-9]*$",
+              "type": "string"
+            }
+          },
+          "query:to": {
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "598b90e0cba29092f72b8940c7e93f1f08000a1f614084fe64374d4f25f872fd"
+    },
+    "GET /v1/supplies/{id}": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/supplies/{id}",
+      "effects": "Returns documented data without a business write.",
+      "environmentRejection": "operational_key_required",
+      "environments": [
+        "operational"
+      ],
+      "fixtures": [],
+      "operationId": "getCommittedSupplyEvent",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "path:id": {
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "b5fc3a1330e95f9d564d6a05e3f549ec8bbdacaa95f549ed67b792b74bfc5f37"
+    },
+    "GET /v1/tax-classes": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "GET /v1/tax-classes",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "fixtures": [],
+      "operationId": "listTaxClasses",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "query:at": {
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          "query:country": {
+            "required": false,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          },
+          "query:group": {
+            "required": false,
+            "schema": {
+              "maxLength": 64,
+              "type": "string"
+            }
+          },
+          "query:q": {
+            "required": false,
+            "schema": {
+              "maxLength": 120,
+              "type": "string"
+            }
+          },
+          "query:tag": {
+            "required": false,
+            "schema": {
+              "maxLength": 64,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "bfa123a42c37a8e9fb8f6b4b7112eab159d8879b9c8d79879ab0cec889038e1a"
+    },
+    "GET /v1/tax-classes/{id}": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "GET /v1/tax-classes/{id}",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "fixtures": [],
+      "operationId": "getTaxClass",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "path:id": {
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "type": "string"
+            }
+          },
+          "query:at": {
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          "query:country": {
+            "required": false,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "b507cb830fe32608684dbe42b2fee20b23d1773c37b10dbf695fcfe4f16658ad"
+    },
+    "GET /v1/tax-registrations": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/tax-registrations",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "listTaxRegistrations",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "e13eb7b6dd0d7cec258a87a8fc54f080da80dab1d8886002341f585690d33e77"
+    },
+    "GET /v1/transactions": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/transactions",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [
+        "transaction-cursor-null"
+      ],
+      "operationId": "listTransactions",
+      "pagination": {
+        "end": [
+          "omitted",
+          "null"
+        ],
+        "parameter": "cursor",
+        "response": "next_cursor"
+      },
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:api_key_id": {
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "query:country": {
+            "required": false,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          },
+          "query:currency": {
+            "required": false,
+            "schema": {
+              "maxLength": 3,
+              "minLength": 3,
+              "type": "string"
+            }
+          },
+          "query:cursor": {
+            "required": false,
+            "schema": {
+              "maxLength": 512,
+              "type": "string"
+            }
+          },
+          "query:from": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          "query:limit": {
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 500,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "query:source_id": {
+            "required": false,
+            "schema": {
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_/-]{1,100}$",
+              "type": "string"
+            }
+          },
+          "query:source_profile_id": {
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "query:tax_class_id": {
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          "query:to": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "99084e69accfce7c7cc43b13224ebc180c69d116b5668ec4ec3119e9341f639a"
+    },
+    "GET /v1/transactions/aggregated": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/transactions/aggregated",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "aggregateTransactions",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:api_key_id": {
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "query:country": {
+            "required": false,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          },
+          "query:currency": {
+            "required": false,
+            "schema": {
+              "maxLength": 3,
+              "minLength": 3,
+              "type": "string"
+            }
+          },
+          "query:from": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          "query:group_by": {
+            "required": false,
+            "schema": {
+              "default": "country",
+              "enum": [
+                "country",
+                "tax_class",
+                "month"
+              ],
+              "type": "string"
+            }
+          },
+          "query:source_id": {
+            "required": false,
+            "schema": {
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_/-]{1,100}$",
+              "type": "string"
+            }
+          },
+          "query:source_profile_id": {
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "query:to": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "7187d870ea551cff31516ac37290174b5c74da020c9d52193447d5ec90b76f1c"
+    },
+    "GET /v1/transactions/export": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/transactions/export",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [
+        "csv-export-bytes"
+      ],
+      "operationId": "exportTransactions",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:api_key_id": {
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "query:country": {
+            "required": false,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          },
+          "query:currency": {
+            "required": false,
+            "schema": {
+              "maxLength": 3,
+              "minLength": 3,
+              "type": "string"
+            }
+          },
+          "query:export_version": {
+            "required": false,
+            "schema": {
+              "default": 1,
+              "enum": [
+                1,
+                2
+              ],
+              "type": "integer"
+            }
+          },
+          "query:from": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          "query:source_id": {
+            "required": false,
+            "schema": {
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_/-]{1,100}$",
+              "type": "string"
+            }
+          },
+          "query:source_profile_id": {
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "query:tax_class_id": {
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          "query:to": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Content-Disposition",
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "text/csv; charset=utf-8": "bytes"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "98073c1d285e774e6758772a7f7f38d6951405bbf99cd51d77d02035f6740362"
+    },
+    "GET /v1/transactions/{id}": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/transactions/{id}",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "getTransaction",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "path:id": {
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "d88d60325775570a5e7405b93617bc800e088c6f7692b4e44a4d53aee1a8a7f9"
+    },
+    "GET /v1/vat/rates": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "GET /v1/vat/rates",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "getVatRate",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:at": {
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          "query:country": {
+            "required": true,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          },
+          "query:tax_class_id": {
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "a0ae6f9c8210d74aabcb2b62487263a2ae6176846f9ad47c17414f80e84c5b44"
+    },
+    "GET /v1/vat/sme-thresholds": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "GET /v1/vat/sme-thresholds",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "fixtures": [],
+      "operationId": "listSmeThresholds",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "query:country": {
+            "required": false,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          },
+          "query:date": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          "query:taxName": {
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          "query:tax_name": {
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "a01a68cfc59214083acb7816cfcc9c0d1c2e2914dbdebf22c7690d8e48176a71"
+    },
+    "GET /v1/vat/thresholds": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "GET /v1/vat/thresholds",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "fixtures": [],
+      "operationId": "listVatThresholds",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "query:country": {
+            "required": false,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          },
+          "query:date": {
+            "required": false,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            }
+          },
+          "query:type": {
+            "required": false,
+            "schema": {
+              "enum": [
+                "oss",
+                "ioss"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "df5244055f7c2bcebef63e72b859e834b3399853439566cc90237f8c1eedb0f4"
+    },
+    "PATCH /v1/sources/{id}": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "PATCH /v1/sources/{id}",
+      "effects": "Updates an account source profile.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "updateSource",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "path:id": {
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "9246e796b28387ed1eab84d23d828b58ea334a2ea277b75ffad4c332905685b0"
+    },
+    "PATCH /v1/tax-registrations/{id}": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "PATCH /v1/tax-registrations/{id}",
+      "effects": "Updates an account tax registration.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "updateTaxRegistration",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "path:id": {
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "9f866011a13038e09cf04fdb0c8aa4a9a0e14d524d2651faad24ae5029dac220"
+    },
+    "POST /agent/auth": {
+      "authentication": "anonymous",
+      "behavior": "mutation",
+      "contextAssertion": false,
+      "contractCheck": "POST /agent/auth",
+      "credentialEnvironment": "sandbox",
+      "effects": "Creates a pending sandbox key approval request.",
+      "environments": null,
+      "fixtures": [
+        "agent-registration"
+      ],
+      "operationId": "startAgentRegistration",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {}
+      },
+      "responses": {
+        "202": {
+          "headers": [
+            "Cache-Control"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [],
+          "media": {}
+        },
+        "404": {
+          "headers": [],
+          "media": {}
+        },
+        "421": {
+          "headers": [],
+          "media": {}
+        },
+        "429": {
+          "headers": [],
+          "media": {}
+        },
+        "500": {
+          "headers": [],
+          "media": {}
+        }
+      },
+      "retryClass": "registration_no_retry",
+      "scopes": [],
+      "wireSha256": "12a0de07c0da52d45092279da6be71e1d9c994defed82b297e664088d69a79c1"
+    },
+    "POST /agent/auth/claim": {
+      "authentication": "claim_token",
+      "behavior": "credential_read",
+      "contextAssertion": false,
+      "contractCheck": "POST /agent/auth/claim",
+      "credentialEnvironment": "sandbox",
+      "effects": "Discloses the approved sandbox credential to a valid claim token.",
+      "environments": null,
+      "fixtures": [
+        "agent-claim"
+      ],
+      "operationId": "claimAgentAPIKey",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {}
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Cache-Control"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [],
+          "media": {}
+        },
+        "403": {
+          "headers": [],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "Retry-After"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "421": {
+          "headers": [],
+          "media": {}
+        },
+        "429": {
+          "headers": [],
+          "media": {}
+        },
+        "500": {
+          "headers": [],
+          "media": {}
+        }
+      },
+      "retryClass": "claim_polling",
+      "scopes": [],
+      "wireSha256": "78b708f1ef15a53ac7011608650a2790acefc3c940322af90756a19a6c63654a"
+    },
+    "POST /v1/information/customer-vat/classification": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/customer-vat/classification",
+      "effects": "Saves a customer classification declaration.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "bd103c4eeb6cdf3a6f347b5cc65907a9c5845e62e85a9e6cdda310f2e2167b8e"
+    },
+    "POST /v1/information/customer-vat/oss-context": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/customer-vat/oss-context",
+      "effects": "Saves customer OSS context declarations.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "5190a572f5418f7299d07bbc448dbf0672582d67b7169233fd716e748d2405af"
+    },
+    "POST /v1/information/customer-vat/provisional-rate": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/customer-vat/provisional-rate",
+      "effects": "Saves a customer provisional rate.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "cc252651a00fb65ed2f57ea1144b13a5e7f0930b8fb8b48bb723720d4791ff64"
+    },
+    "POST /v1/information/customer-vat/reprocess": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/customer-vat/reprocess",
+      "effects": "Reprocesses an unlocked customer transaction.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "9c24354fac2a0594f847a1edb0f69d870184c96384502535d607b38a294d7950"
+    },
+    "POST /v1/information/customer-vat/retire": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/customer-vat/retire",
+      "effects": "Retires a customer-owned product rule.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "067072b0accd3163e02dfb00b4c048bcafa4f998e088c8b30321bc3edb5c861f"
+    },
+    "POST /v1/information/customer-vat/select": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/customer-vat/select",
+      "effects": "Saves a customer-owned source-option choice.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": null,
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "6a01b08d658bbbff182f3ef63ea5504fb3f7ec4629c42a376665126d64c7267d"
+    },
+    "POST /v1/information/tax-class/resolve": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/tax-class/resolve",
+      "effects": "Resolves source information for the exact code.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "resolveInformationalTaxClass",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "413": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only",
+        "classification-resolve"
+      ],
+      "wireSha256": "5dfc00a1575936c630f19e51c0f60fea010c6820db65a53e9736b91fc7fe647c"
+    },
+    "POST /v1/information/vat/calculate": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/information/vat/calculate",
+      "effects": "Calculates an ephemeral conditional preview.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "calculateInformationalVAT",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "413": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {}
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "b07abd5d6e3a328cfc9ce8b59309b1790b686c896ac94a6c04ee8d6eec2daeb5"
+    },
+    "POST /v1/reports/locked-return-periods/union-oss": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/reports/locked-return-periods/union-oss",
+      "effects": "Locks a Union OSS return period and produces retained artifacts.",
+      "environmentRejection": "sandbox_filing_unavailable",
+      "environments": [
+        "operational"
+      ],
+      "fixtures": [
+        "filing-sandbox-lock"
+      ],
+      "operationId": "lockUnionOSSReturnPeriod",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "aec56536b91d926485765058aa67a3ec0865bd21a1244c0a9546d81d98544680"
+    },
+    "POST /v1/reports/locked-return-periods/union-oss/filed": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/reports/locked-return-periods/union-oss/filed",
+      "effects": "Records a filing status and does not transmit a return.",
+      "environmentRejection": "sandbox_filing_unavailable",
+      "environments": [
+        "operational"
+      ],
+      "fixtures": [
+        "filing-sandbox-file"
+      ],
+      "operationId": "markLockedUnionOSSReturnPeriodFiled",
+      "pagination": null,
+      "request": {
+        "bodyRequired": false,
+        "media": [],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          },
+          "query:period": {
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-Q[1-4]$",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "84e07fd5910a05af7e29eb1e1bd80ff1cfc0ee904239338aefcec67791d0707b"
+    },
+    "POST /v1/sources": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/sources",
+      "effects": "Creates an account source profile.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "createSource",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "266249e6e883179907c69406cf188adf85e6af3ca37e7dfb5abb61e97c7ff8d7"
+    },
+    "POST /v1/supplies": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/supplies",
+      "effects": "Commits a supply revision and queues processing.",
+      "environmentRejection": "operational_key_required",
+      "environments": [
+        "operational"
+      ],
+      "fixtures": [
+        "supply-replay",
+        "signed-int64-boundaries",
+        "int64-overflow",
+        "supply-denial-malformed",
+        "supply-denial-foreign",
+        "supply-denial-scope",
+        "supply-denial-sandbox"
+      ],
+      "operationId": "commitSupplyEvent",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "Location",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "201": {
+          "headers": [
+            "Location",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "413": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "supply_conditional",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "4fdac34d50bc9255924a2a14b90d8e32873a641cc10d182069c0f31650338b01"
+    },
+    "POST /v1/tax-registrations": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/tax-registrations",
+      "effects": "Creates an account tax registration.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "createTaxRegistration",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ],
+      "wireSha256": "3f6ace15b6ace4fcba66dc3d3dec329f9b8f47057c33e3c8818870fe4f8eed81"
+    },
+    "POST /v1/vat/calculate": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/vat/calculate",
+      "effects": "Persists an authenticated calculation and its evidence.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [
+        "calculate-pinned-retry",
+        "calculate-missing-or-null-price-flag",
+        "calculate-rate-limit"
+      ],
+      "operationId": "calculateVat",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:Idempotency-Key": {
+            "required": false,
+            "schema": {
+              "maxLength": 255,
+              "minLength": 1,
+              "pattern": "^[\\x21-\\x7E]+$",
+              "type": "string"
+            }
+          },
+          "header:X-Source-ID": {
+            "required": false,
+            "schema": {
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_/-]{1,100}$",
+              "type": "string"
+            }
+          },
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "409": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "503": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "calculation_conditional",
+      "scopes": [
+        "full",
+        "calculate-only"
+      ],
+      "wireSha256": "e17927bea015b5834c74cb77f6e0dc51633d83f5211ea3e05296b1d37f73a8cc"
+    },
+    "POST /v1/vat/sme-eligibility": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "contextAssertion": false,
+      "contractCheck": "POST /v1/vat/sme-eligibility",
+      "effects": "Evaluates eligibility against available source data.",
+      "environments": null,
+      "fixtures": [
+        "sme-decimal-null-and-omission"
+      ],
+      "operationId": "checkSmeEligibility",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {}
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [],
+      "wireSha256": "a03951ae2de48293a01ae201a8f4869e2b3f4d0054adb5a6d0f1e5da026ca87a"
+    },
+    "POST /v1/vat/threshold-check": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "contextAssertion": true,
+      "contractCheck": "POST /v1/vat/threshold-check",
+      "effects": "Evaluates reported threshold evidence.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "fixtures": [],
+      "operationId": "checkThreshold",
+      "pagination": null,
+      "request": {
+        "bodyRequired": true,
+        "media": [
+          "application/json"
+        ],
+        "parameters": {
+          "header:X-VAT-Expected-Context": {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AuthContextID"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "400": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "401": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "403": {
+          "headers": [
+            "X-Request-ID",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "404": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "422": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "429": {
+          "headers": [
+            "Retry-After",
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        },
+        "500": {
+          "headers": [
+            "X-VAT-Environment"
+          ],
+          "media": {
+            "application/json": "json"
+          }
+        }
+      },
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ],
+      "wireSha256": "9657da7f1586bb947e11a56ed7770595daec131996be6d3b9b88016cb6219b15"
+    }
+  }
+}

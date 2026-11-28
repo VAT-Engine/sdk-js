@@ -1,0 +1,11 @@
+# Shared CORE conformance corpus
+
+[Cases](cases.json) are synthetic, offline inputs shared across SDKs. Each HTTP case names one `METHOD /path` identity from the [operation catalog](../operations.json). The catalog includes a contract check for every operation. Targeted HTTP fixtures supply extra wire examples for operations where precision, context, errors, retries, pagination or media need explicit behavioral evidence. SDK method implementation and execution are tracked independently.
+
+- Each `exchanges` entry contains a request and an expected response. Path and query values are logical parameters, and header values are literal strings or arrays for repeated headers. `receive: lost_after_commit` instructs a future mock to drop the acknowledgement.
+- `body` is literal UTF-8 JSON text. Parse it losslessly in any SDK harness. Exact integer expectations use decimal strings. Explicit JSON null, boolean false and omitted fields have separate assertions. `schemaError` records the expected schema keyword and instance path for a negative fixture.
+- `bodyFile` points to a byte fixture relative to the contract directory. SHA-256 covers the exact bytes including line endings. JSON attachments retain their original bytes and CSV examples retain the UTF-8 BOM. The payloads are synthetic byte-preservation examples.
+- `assertions` target request/response JSON or the full exchange. They use a JSON Pointer and a zero-based step. `sameAsStep` compares with an earlier exchange. `sdkExpectation` describes outcomes for future SDK transport or worker tests. The offline verifier checks fixture data, and runtime tests later demonstrate the SDK behavior.
+- `supplyReferenceCases` test required and optional references, Go-compatible trimming, invalid UTF-8/NUL and the normalized 160-byte boundary. Apply this normalization and byte validation before schema validation and deduplication. A normalized empty optional reference denotes absence.
+
+The two sandbox filing denial fixtures record a source/schema discrepancy. The current handlers send `error: sandbox_filing_unavailable` without `detail`, which the public error schema requires. The corpus preserves that exact deviation. The pinned OpenAPI is unchanged.
