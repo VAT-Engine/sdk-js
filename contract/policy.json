@@ -1,0 +1,743 @@
+{
+  "environments": {
+    "operational": "X-VAT-Environment may report production on either deployment.",
+    "sandbox": "Isolated test data. Sandbox credentials never imply operational access."
+  },
+  "formatVersion": 1,
+  "operations": {
+    "GET /health": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "GET /ready": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "GET /v1/auth/context": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only",
+        "calculate-only",
+        "classification-resolve"
+      ]
+    },
+    "GET /v1/classification-codes/{scheme}/{code}": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "GET /v1/compliance/threshold-status": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/information/customer-vat/article59c": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/information/customer-vat/attention": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/information/customer-vat/events": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/information/customer-vat/ioss": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/information/customer-vat/oss": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/information/customer-vat/rules": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/information/vat": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/country-vat-breakdown": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/country-vat-breakdown/export": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/filing-prep": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/locked-return-periods/union-oss": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/locked-return-periods/union-oss/exports/{exportID}": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/multi-jurisdiction": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/oss-accountant-report": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/oss-quarterly-summary": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/reports/oss-quarterly-summary/export": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/sources": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/sources/unknown": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/supplies": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environmentRejection": "operational_key_required",
+      "environments": [
+        "operational"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/supplies/{id}": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environmentRejection": "operational_key_required",
+      "environments": [
+        "operational"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/tax-classes": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "GET /v1/tax-classes/{id}": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "GET /v1/tax-registrations": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/transactions": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/transactions/aggregated": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/transactions/export": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/transactions/{id}": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/vat/rates": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "GET /v1/vat/sme-thresholds": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "GET /v1/vat/thresholds": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Returns documented data without a business write.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "PATCH /v1/sources/{id}": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Updates an account source profile.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "PATCH /v1/tax-registrations/{id}": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Updates an account tax registration.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /agent/auth": {
+      "authentication": "anonymous",
+      "behavior": "mutation",
+      "credentialEnvironment": "sandbox",
+      "effects": "Creates a pending sandbox key approval request.",
+      "environments": null,
+      "retryClass": "registration_no_retry",
+      "scopes": []
+    },
+    "POST /agent/auth/claim": {
+      "authentication": "claim_token",
+      "behavior": "credential_read",
+      "credentialEnvironment": "sandbox",
+      "effects": "Discloses the approved sandbox credential to a valid claim token.",
+      "environments": null,
+      "retryClass": "claim_polling",
+      "scopes": []
+    },
+    "POST /v1/information/customer-vat/classification": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Saves a customer classification declaration.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/information/customer-vat/oss-context": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Saves customer OSS context declarations.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/information/customer-vat/provisional-rate": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Saves a customer provisional rate.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/information/customer-vat/reprocess": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Reprocesses an unlocked customer transaction.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/information/customer-vat/retire": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Retires a customer-owned product rule.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/information/customer-vat/select": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Saves a customer-owned source-option choice.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/information/tax-class/resolve": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Resolves source information for the exact code.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only",
+        "classification-resolve"
+      ]
+    },
+    "POST /v1/information/vat/calculate": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Calculates an ephemeral conditional preview.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    },
+    "POST /v1/reports/locked-return-periods/union-oss": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Locks a Union OSS return period and produces retained artifacts.",
+      "environmentRejection": "sandbox_filing_unavailable",
+      "environments": [
+        "operational"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/reports/locked-return-periods/union-oss/filed": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Records a filing status and does not transmit a return.",
+      "environmentRejection": "sandbox_filing_unavailable",
+      "environments": [
+        "operational"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/sources": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Creates an account source profile.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/supplies": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Commits a supply revision and queues processing.",
+      "environmentRejection": "operational_key_required",
+      "environments": [
+        "operational"
+      ],
+      "retryClass": "supply_conditional",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/tax-registrations": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Creates an account tax registration.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "mutation_no_retry",
+      "scopes": [
+        "full"
+      ]
+    },
+    "POST /v1/vat/calculate": {
+      "authentication": "api_key",
+      "behavior": "mutation",
+      "effects": "Persists an authenticated calculation and its evidence.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "calculation_conditional",
+      "scopes": [
+        "full",
+        "calculate-only"
+      ]
+    },
+    "POST /v1/vat/sme-eligibility": {
+      "authentication": "anonymous",
+      "behavior": "read_only",
+      "effects": "Evaluates eligibility against available source data.",
+      "environments": null,
+      "retryClass": "read_candidate",
+      "scopes": []
+    },
+    "POST /v1/vat/threshold-check": {
+      "authentication": "api_key",
+      "behavior": "read_only",
+      "effects": "Evaluates reported threshold evidence.",
+      "environments": [
+        "operational",
+        "sandbox"
+      ],
+      "retryClass": "read_candidate",
+      "scopes": [
+        "full",
+        "read-only"
+      ]
+    }
+  },
+  "retry": {
+    "classes": {
+      "calculation_conditional": {
+        "automatic_retry": "only_if_reviewed_and_all_identity_conditions_hold",
+        "replay": "Same tenant and endpoint, explicit transaction_date, original canonical inputs, Idempotency-Key and unchanged X-Source-ID attribution.",
+        "window": "Mapping is retained for the lifetime of the original calculation. Verify safe policy limits before enabling."
+      },
+      "claim_polling": {
+        "automatic_retry": false,
+        "polling": "Distinguish authorization_pending from other conflicts. Caller-controlled polling respects interval, Retry-After and expiry.",
+        "replay": "A valid token returns the same active approved key while it remains eligible."
+      },
+      "mutation_no_retry": {
+        "automatic_retry": false,
+        "constraint": "Review any exception against a documented replay contract."
+      },
+      "read_candidate": {
+        "automatic_retry": "pending_operation_review",
+        "constraint": "Check operation effects and retryable conditions before enabling."
+      },
+      "registration_no_retry": {
+        "automatic_retry": false,
+        "constraint": "A lost response can leave a pending request. Require explicit caller intent."
+      },
+      "supply_conditional": {
+        "automatic_retry": "only_if_reviewed_and_all_identity_conditions_hold",
+        "replay": "Same authorized context, supply identity, revision, facts and original-sale binding where applicable.",
+        "window": "Verify retained revision and replay conditions. Never assign a new event revision to get around a conflict."
+      }
+    },
+    "default": "no_automatic_retry"
+  }
+}

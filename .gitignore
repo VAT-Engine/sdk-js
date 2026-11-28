@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 
 # Local agent instructions, configuration, and memory
 AGENTS.md
@@ -18,7 +19,10 @@ mcp.json
 MEMORY.md
 memory.jsonl
 memory.sqlite*
-lerna-debug.log*
+.npmrc
+.venv/
+__pycache__/
+*.py[cod]
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

@@ -1,9 +1,9 @@
 # VAT Engine SDK-JS — implementation plan
 
-**Status:** JS-00 ready for review · 2026-11-27
+**Status:** JS-00 verified · JS-01 ready for review · 2026-11-28
 **Repository:** `VAT-Engine/sdk-js` · **Intended package:** `@vat-engine/sdk` (namespace pending)  
-**Requirements:** [Shared SDK requirements extract](../contract/REQUIREMENTS.md) and the [pinned public contract](../contract/README.md). The shared standard v1.0 candidate and release policy await owner approval.
-**Release model:** Gate A for the direct HTTP client and Gate B for optional durable delivery. Commit, publication and hosted acceptance have separate evidence and authorization.
+**Requirements:** Approved Shared SDK Standard v1.0, reflected in the [public requirements extract](../contract/REQUIREMENTS.md) and the [pinned public contract](../contract/README.md).
+**Release model:** Independent Gate A for the direct HTTP client and Gate B for optional durable delivery, approved on 2026-11-28. Publication and hosted acceptance have separate evidence and authorization.
 
 ## 1. Baseline and release boundaries
 
@@ -38,10 +38,10 @@ At the beginning of every task, check the branch, commit, and working tree. Read
 **Objective:** Prepare independent repositories, shared requirements and reviewable evidence.  
 **Dependencies:** Reviewed inputs and access to both checkouts.
 
-- [ ] Review and approve shared standard v1.0 and the proposed independent Gate A/B policy. Decide strict-mode inclusion at its implementation and release milestones.
+- [x] Approve shared standard v1.0 and independent Gate A and Gate B releases. Strict-mode inclusion remains a later decision.
 - [x] Prepare the canonical shared candidate and public-safe requirements handoff with a verified public snapshot.
 - [x] Prepare the execution plan and decision location. Establish private local-agent setup and verify public exclusions.
-- [ ] Review the JS-00 changes and approve the next milestone.
+- [x] Finalize JS-00 acceptance and authorize JS-01.
 - [x] Record the published snapshot, unauthenticated Auth Context availability and outstanding hosted acceptance and registry work.
 **Acceptance:** owner-approved scope, independent workspace/repo boundaries, known contract revision and explicit unresolved decisions. No runtime implementation in this phase.
 
@@ -50,9 +50,9 @@ At the beginning of every task, check the branch, commit, and working tree. Read
 **Objective:** Establish reproducible contract handoff and common behavioral evidence.  
 **Dependencies:** JS-00 approval and the reviewed public baseline.
 
-- [ ] Verify the JS-00 OpenAPI pin and manifest, then establish the reproducible handoff. Export the approved method/path allowlist, operation/access/environment/replay/media data and synthetic fixtures. Cover public and token-authenticated operations and operations without IDs.
-- [ ] Establish reproducible generation and drift checks. Define how SDK public methods map to each operation; freeze no method names before interface review.
-- [ ] Prepare shared tests first: int64 bounds/unsafe JS numbers, numeric event_version vs string receipt, nullable ECB double, omitted/null/false, empty dispatch scope, raw immutable JSON attachment bytes, errors and response metadata, auth/scope/environment order, retry and duplicate supply scenarios.
+- [x] Verify the original OpenAPI pin and export the exact method/path allowlist, operation policy and synthetic corpus. Cover anonymous, API-key and claim-token routes, including operations without IDs.
+- [x] Establish offline assembly, verification and drift reporting. Map all proposed JS methods to the catalog contract checks. Method names remain provisional.
+- [x] Validate wire fixtures for int64 boundaries and unsafe JS magnitudes, supply revision types, nullable ECB rate, omission and false, empty dispatch scopes, raw attachments, pagination, known error shapes, auth precedence and replay.
 **Acceptance:** exact operation-set equality, all references resolve, fixture validation, no private material or real credentials; each planned method mapped to its operation and test.
 
 ### JS-02 — Node.js package foundation and technical decisions
@@ -177,8 +177,8 @@ Each checklist records scope and acceptance. Update this table after each milest
 
 | ID | Status | SDK revision / PR | Evidence and remaining conditions |
 | --- | --- | --- | --- |
-| JS-00 | Ready for review | Local feat/project-initialization at 0c62376 / — | Manifest integrity, exact method/path parity, and reference checks passed. The source projection passed 15 tests. Auth Context HTTP and agent token purpose/expiry passed locally. Git exclusions, a candidate Git archive, and synthetic npm archives passed the disclosure check. Review and owner decision pending. |
-| JS-01 | Planned | — / — | Await JS-00 approval. Start from the pinned manifest and build the method/path parity and synthetic conformance corpus. |
+| JS-00 | Verified | Local feat/project-initialization based on c1fbdc5 / — | Accepted on 2026-11-28. Verified 19 representative local excludes, the private/local instruction match, Git index/history exclusions and Git/npm archive boundaries. |
+| JS-01 | Ready for review | Local feat/project-initialization based on c1fbdc5 / — | Original OpenAPI digest preserved. Verified 55 operations, 45 scope mappings, 959 references, 22 cases with 33 exchanges, 14 reference cases and seven tooling tests. Two offline assemblies matched byte-for-byte. Public-only checkout passed. Review the two documented sandbox filing error deviations and the proposed method map. |
 | JS-02 | Planned | — / — | Runtime and format, exact integer representation, dependencies and toolchain decisions pending. |
 | JS-03 | Planned | — / — | Transport, API encoding and normal entry-point test evidence pending. |
 | JS-04 | Planned | — / — | Auth, replay and fail-closed results pending. Strict context claim requires authenticated hosted acceptance. |
@@ -191,4 +191,6 @@ Each checklist records scope and acceptance. Update this table after each milest
 | JS-11 | Planned | — / — | Failure handling, compatibility and recovery evidence pending. |
 | JS-12 | Planned | — / — | Gate B acceptance, pilot and release authorization pending. |
 
-The [public contract pin](../contract/manifest.json) applies to this preparation. The owner reviews the v1.0 candidate, independent gate policy and JS-01 start. npm package publication requires namespace resolution and a separate decision.
+The [PR #6 fixture follow-up](https://github.com/VAT-Engine/sdk-js/pull/6#discussion_r4726920232) verifies `400 missing_price_includes_vat` for both omitted and null amount-basis flags. The contract verifier and all seven tooling tests passed with the refreshed fixture digest.
+
+The [public contract pin](../contract/manifest.json) applies to JS-00 and JS-01. JS-02 awaits its own authorization. npm package publication requires namespace resolution and a separate decision.

@@ -1,0 +1,1234 @@
+{
+  "cases": [
+    {
+      "assertions": [
+        {
+          "decimalDigits": "9007199254740993",
+          "jsonType": "int64",
+          "message": "request",
+          "pointer": "/event/event_version",
+          "step": 0
+        },
+        {
+          "decimalDigits": "9007199254740993",
+          "jsonType": "int64",
+          "message": "request",
+          "pointer": "/event/gross_amount_minor",
+          "step": 0
+        },
+        {
+          "equals": false,
+          "message": "request",
+          "pointer": "/event/prices_include_tax",
+          "step": 0
+        },
+        {
+          "absent": true,
+          "message": "request",
+          "pointer": "/event/external_event_id",
+          "step": 0
+        },
+        {
+          "equals": "9007199254740993",
+          "message": "response",
+          "pointer": "/event_version",
+          "step": 0
+        },
+        {
+          "equals": "00000000-0000-4000-8000-000000000002",
+          "message": "response",
+          "pointer": "/id",
+          "step": 0
+        },
+        {
+          "equals": "00000000-0000-4000-8000-000000000002",
+          "message": "response",
+          "pointer": "/id",
+          "step": 1
+        },
+        {
+          "equals": "duplicate",
+          "message": "response",
+          "pointer": "/result",
+          "step": 1
+        },
+        {
+          "equals": "supply_revision_conflict",
+          "message": "response",
+          "pointer": "/error",
+          "step": 2
+        },
+        {
+          "message": "exchange",
+          "pointer": "/request",
+          "sameAsStep": 0,
+          "step": 1
+        }
+      ],
+      "description": "Preserve exact identity and reject changed facts on the same revision.",
+      "exchanges": [
+        {
+          "receive": "lost_after_commit",
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9007199254740993,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740993,\"gross_amount_minor\":9007199254740993,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"id\":\"00000000-0000-4000-8000-000000000002\",\"result\":\"imported\",\"source_id\":\"synthetic-source\",\"source_profile_id\":\"9007199254740993\",\"event_type\":\"sale\",\"event_version\":\"9007199254740993\",\"supply_date\":\"2026-01-02\",\"provenance\":\"api_committed_supply/v1\"}",
+            "media": "application/json",
+            "status": 201
+          }
+        },
+        {
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9007199254740993,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740993,\"gross_amount_minor\":9007199254740993,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"id\":\"00000000-0000-4000-8000-000000000002\",\"result\":\"duplicate\",\"source_id\":\"synthetic-source\",\"source_profile_id\":\"9007199254740993\",\"event_type\":\"sale\",\"event_version\":\"9007199254740993\",\"supply_date\":\"2026-01-02\",\"provenance\":\"api_committed_supply/v1\"}",
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9007199254740993,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740994,\"gross_amount_minor\":9007199254740994,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"supply_revision_conflict\",\"detail\":\"Synthetic supply_revision_conflict\"}",
+            "media": "application/json",
+            "status": 409
+          }
+        }
+      ],
+      "id": "supply-replay",
+      "operation": "POST /v1/supplies",
+      "sdkExpectation": {
+        "newEconomicEffects": 1,
+        "replayOriginalRequest": true,
+        "retryConflict": false
+      }
+    },
+    {
+      "assertions": [
+        {
+          "decimalDigits": "9223372036854775807",
+          "jsonType": "int64",
+          "message": "request",
+          "pointer": "/event/event_version",
+          "step": 0
+        },
+        {
+          "decimalDigits": "-9223372036854775808",
+          "jsonType": "int64",
+          "message": "request",
+          "pointer": "/event/gross_amount_minor",
+          "step": 0
+        },
+        {
+          "equals": "9223372036854775807",
+          "message": "response",
+          "pointer": "/event_version",
+          "step": 0
+        }
+      ],
+      "description": "Serialization boundaries for a synthetic negative correction.",
+      "exchanges": [
+        {
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"refund\",\"event_version\":9223372036854775807,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":-9223372036854775808,\"gross_amount_minor\":-9223372036854775808,\"prices_include_tax\":false,\"external_event_id\":\"synthetic-refund\"},\"original_supply_event_id\":\"00000000-0000-4000-8000-000000000003\"}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"id\":\"00000000-0000-4000-8000-000000000002\",\"result\":\"imported\",\"source_id\":\"synthetic-source\",\"source_profile_id\":\"9007199254740993\",\"event_type\":\"refund\",\"event_version\":\"9223372036854775807\",\"supply_date\":\"2026-01-02\",\"provenance\":\"api_committed_supply/v1\"}",
+            "media": "application/json",
+            "status": 201
+          }
+        }
+      ],
+      "id": "signed-int64-boundaries",
+      "operation": "POST /v1/supplies",
+      "sdkExpectation": {}
+    },
+    {
+      "assertions": [
+        {
+          "decimalDigits": "9223372036854775808",
+          "message": "request",
+          "pointer": "/event/event_version",
+          "step": 0
+        }
+      ],
+      "description": "An integer greater than MaxInt64 is outside the wire type.",
+      "exchanges": [
+        {
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9223372036854775808,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740993,\"gross_amount_minor\":9007199254740993,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "media": "application/json",
+            "schemaError": {
+              "keyword": "maximum",
+              "path": [
+                "event",
+                "event_version"
+              ]
+            },
+            "schemaNote": "Outside signed int64."
+          },
+          "response": {
+            "body": "{\"error\":\"invalid_json\",\"detail\":\"Synthetic invalid_json\"}",
+            "media": "application/json",
+            "status": 400
+          }
+        }
+      ],
+      "id": "int64-overflow",
+      "operation": "POST /v1/supplies",
+      "sdkExpectation": {
+        "rejectLocallyIfTypedInput": true
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "invalid_expected_context",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        }
+      ],
+      "description": "Auth Context, scope and environment precedence for synthetic credentials.",
+      "exchanges": [
+        {
+          "auth": {
+            "actualContext": "ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "environment": "sandbox",
+            "scope": "read-only"
+          },
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9007199254740993,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740993,\"gross_amount_minor\":9007199254740993,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key",
+              "X-VAT-Expected-Context": [
+                "bad",
+                "bad"
+              ]
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"invalid_expected_context\",\"detail\":\"Synthetic invalid_expected_context\"}",
+            "media": "application/json",
+            "status": 400
+          }
+        }
+      ],
+      "id": "supply-denial-malformed",
+      "operation": "POST /v1/supplies",
+      "sdkExpectation": {
+        "persistedWrites": 0
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "auth_context_mismatch",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        }
+      ],
+      "description": "Auth Context, scope and environment precedence for synthetic credentials.",
+      "exchanges": [
+        {
+          "auth": {
+            "actualContext": "ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "environment": "sandbox",
+            "scope": "read-only"
+          },
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9007199254740993,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740993,\"gross_amount_minor\":9007199254740993,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key",
+              "X-VAT-Expected-Context": "ctx_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"auth_context_mismatch\",\"detail\":\"Synthetic auth_context_mismatch\"}",
+            "media": "application/json",
+            "status": 403
+          }
+        }
+      ],
+      "id": "supply-denial-foreign",
+      "operation": "POST /v1/supplies",
+      "sdkExpectation": {
+        "persistedWrites": 0
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "insufficient_scope",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        }
+      ],
+      "description": "Auth Context, scope and environment precedence for synthetic credentials.",
+      "exchanges": [
+        {
+          "auth": {
+            "actualContext": "ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "environment": "sandbox",
+            "scope": "read-only"
+          },
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9007199254740993,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740993,\"gross_amount_minor\":9007199254740993,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key",
+              "X-VAT-Expected-Context": "ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"insufficient_scope\",\"detail\":\"Synthetic insufficient_scope\"}",
+            "media": "application/json",
+            "status": 403
+          }
+        }
+      ],
+      "id": "supply-denial-scope",
+      "operation": "POST /v1/supplies",
+      "sdkExpectation": {
+        "persistedWrites": 0
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "operational_key_required",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        }
+      ],
+      "description": "Auth Context, scope and environment precedence for synthetic credentials.",
+      "exchanges": [
+        {
+          "auth": {
+            "actualContext": "ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "environment": "sandbox",
+            "scope": "full"
+          },
+          "request": {
+            "body": "{\"source_profile_id\":\"9007199254740993\",\"event\":{\"external_order_id\":\"synthetic-order\",\"external_line_id\":\"synthetic-line\",\"event_type\":\"sale\",\"event_version\":9007199254740993,\"supply_date\":\"2026-01-02\",\"supply_kind\":\"service\",\"currency\":\"EUR\",\"currency_scale\":2,\"taxable_amount_minor\":9007199254740993,\"gross_amount_minor\":9007199254740993,\"prices_include_tax\":false}}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key",
+              "X-VAT-Expected-Context": "ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"operational_key_required\",\"detail\":\"Synthetic operational_key_required\"}",
+            "media": "application/json",
+            "status": 403
+          }
+        }
+      ],
+      "id": "supply-denial-sandbox",
+      "operation": "POST /v1/supplies",
+      "sdkExpectation": {
+        "persistedWrites": 0
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "sandbox_filing_unavailable",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        },
+        {
+          "absent": true,
+          "message": "response",
+          "pointer": "/detail",
+          "step": 0
+        }
+      ],
+      "description": "The sandbox denial currently omits the required ErrorResponse detail.",
+      "exchanges": [
+        {
+          "auth": {
+            "environment": "sandbox",
+            "scope": "full"
+          },
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "query": {
+              "period": "2026-Q1"
+            }
+          },
+          "response": {
+            "body": "{\"error\":\"sandbox_filing_unavailable\"}",
+            "media": "application/json",
+            "schemaError": {
+              "keyword": "required",
+              "path": []
+            },
+            "schemaNote": "The sandbox handler emits error without detail.",
+            "status": 403
+          }
+        }
+      ],
+      "id": "filing-sandbox-lock",
+      "operation": "POST /v1/reports/locked-return-periods/union-oss",
+      "sdkExpectation": {
+        "persistedWrites": 0
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "sandbox_filing_unavailable",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        },
+        {
+          "absent": true,
+          "message": "response",
+          "pointer": "/detail",
+          "step": 0
+        }
+      ],
+      "description": "The sandbox denial currently omits the required ErrorResponse detail.",
+      "exchanges": [
+        {
+          "auth": {
+            "environment": "sandbox",
+            "scope": "full"
+          },
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "query": {
+              "period": "2026-Q1"
+            }
+          },
+          "response": {
+            "body": "{\"error\":\"sandbox_filing_unavailable\"}",
+            "media": "application/json",
+            "schemaError": {
+              "keyword": "required",
+              "path": []
+            },
+            "schemaNote": "The sandbox handler emits error without detail.",
+            "status": 403
+          }
+        }
+      ],
+      "id": "filing-sandbox-file",
+      "operation": "POST /v1/reports/locked-return-periods/union-oss/filed",
+      "sdkExpectation": {
+        "persistedWrites": 0
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": false,
+          "message": "request",
+          "pointer": "/price_includes_vat",
+          "step": 0
+        },
+        {
+          "equals": "2026-08-28",
+          "message": "request",
+          "pointer": "/transaction_date",
+          "step": 1
+        },
+        {
+          "equals": "00000000-0000-4000-8000-000000000001",
+          "message": "response",
+          "pointer": "/calculation_id",
+          "step": 1
+        },
+        {
+          "equals": "idempotency_conflict",
+          "message": "response",
+          "pointer": "/error",
+          "step": 2
+        },
+        {
+          "message": "exchange",
+          "pointer": "/request",
+          "sameAsStep": 0,
+          "step": 1
+        }
+      ],
+      "description": "Replay the original key, base, date, source and inputs after acknowledgement loss.",
+      "exchanges": [
+        {
+          "receive": "lost_after_commit",
+          "request": {
+            "body": "{\"country\":\"DE\",\"currency\":\"EUR\",\"tax_class_id\":\"standard\",\"gross_amount_minor\":10000,\"price_includes_vat\":false,\"transaction_date\":\"2026-08-28\"}",
+            "headers": {
+              "Idempotency-Key": "fixture-only-retry-id",
+              "X-API-Key": "fixture-only-api-key",
+              "X-Source-ID": "fixture-source"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"calculation_id\":\"00000000-0000-4000-8000-000000000001\",\"country\":\"DE\",\"currency\":\"EUR\",\"vat_rate_bps\":1900,\"gross_amount_minor\":11900,\"net_amount_minor\":10000,\"vat_amount_minor\":1900,\"transaction_date\":\"2026-08-28T00:00:00Z\",\"rate_provenance\":{\"schema_version\":\"rate-evidence/v1\",\"evidence_status\":\"legacy_unverifiable\",\"source\":\"legacy_recorded_window\",\"effective_at\":\"2026-08-28T00:00:00Z\",\"source_evidence\":[]},\"calculation_provenance\":{\"schema_version\":\"calculation-evidence/v1\",\"calculation_version\":\"vat-calculator-half-up/v1\",\"execution_digest\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"ownership\":\"tenant_owned\",\"evidence_status\":\"captured\",\"replay_status\":\"not_supported\"}}",
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {
+            "body": "{\"country\":\"DE\",\"currency\":\"EUR\",\"tax_class_id\":\"standard\",\"gross_amount_minor\":10000,\"price_includes_vat\":false,\"transaction_date\":\"2026-08-28\"}",
+            "headers": {
+              "Idempotency-Key": "fixture-only-retry-id",
+              "X-API-Key": "fixture-only-api-key",
+              "X-Source-ID": "fixture-source"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"calculation_id\":\"00000000-0000-4000-8000-000000000001\",\"country\":\"DE\",\"currency\":\"EUR\",\"vat_rate_bps\":1900,\"gross_amount_minor\":11900,\"net_amount_minor\":10000,\"vat_amount_minor\":1900,\"transaction_date\":\"2026-08-28T00:00:00Z\",\"rate_provenance\":{\"schema_version\":\"rate-evidence/v1\",\"evidence_status\":\"legacy_unverifiable\",\"source\":\"legacy_recorded_window\",\"effective_at\":\"2026-08-28T00:00:00Z\",\"source_evidence\":[]},\"calculation_provenance\":{\"schema_version\":\"calculation-evidence/v1\",\"calculation_version\":\"vat-calculator-half-up/v1\",\"execution_digest\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"ownership\":\"tenant_owned\",\"evidence_status\":\"captured\",\"replay_status\":\"not_supported\"}}",
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {
+            "body": "{\"country\":\"DE\",\"currency\":\"EUR\",\"tax_class_id\":\"standard\",\"gross_amount_minor\":10000,\"price_includes_vat\":false,\"transaction_date\":\"2026-08-28\"}",
+            "headers": {
+              "Idempotency-Key": "fixture-only-retry-id",
+              "X-API-Key": "fixture-only-api-key",
+              "X-Source-ID": "fixture-other-source"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"idempotency_conflict\",\"detail\":\"Synthetic idempotency_conflict\"}",
+            "media": "application/json",
+            "status": 409
+          }
+        }
+      ],
+      "id": "calculate-pinned-retry",
+      "operation": "POST /v1/vat/calculate",
+      "sdkExpectation": {
+        "configuredKeyAfterFirstAttempt": "fixture-only-other-api-key",
+        "retryConflict": false,
+        "reuseOriginalCredentialAndDestination": true
+      }
+    },
+    {
+      "assertions": [
+        {
+          "absent": true,
+          "message": "request",
+          "pointer": "/price_includes_vat",
+          "step": 0
+        },
+        {
+          "jsonType": "null",
+          "message": "request",
+          "pointer": "/price_includes_vat",
+          "step": 1
+        },
+        {
+          "equals": "missing_price_includes_vat",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        },
+        {
+          "equals": "missing_price_includes_vat",
+          "message": "response",
+          "pointer": "/error",
+          "step": 1
+        }
+      ],
+      "description": "Omitted and null values are invalid for the required boolean.",
+      "exchanges": [
+        {
+          "request": {
+            "body": "{\"country\":\"DE\",\"currency\":\"EUR\",\"tax_class_id\":\"standard\",\"gross_amount_minor\":10000,\"transaction_date\":\"2026-08-28\"}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "media": "application/json",
+            "schemaError": {
+              "keyword": "required",
+              "path": []
+            },
+            "schemaNote": "Required boolean omitted."
+          },
+          "response": {
+            "body": "{\"error\":\"missing_price_includes_vat\",\"detail\":\"price_includes_vat is required and must explicitly be true for a gross input or false for a net input\"}",
+            "media": "application/json",
+            "status": 400
+          }
+        },
+        {
+          "request": {
+            "body": "{\"country\":\"DE\",\"currency\":\"EUR\",\"tax_class_id\":\"standard\",\"gross_amount_minor\":10000,\"price_includes_vat\":null,\"transaction_date\":\"2026-08-28\"}",
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "media": "application/json",
+            "schemaError": {
+              "keyword": "type",
+              "path": [
+                "price_includes_vat"
+              ]
+            },
+            "schemaNote": "Required non-nullable boolean."
+          },
+          "response": {
+            "body": "{\"error\":\"missing_price_includes_vat\",\"detail\":\"price_includes_vat is required and must explicitly be true for a gross input or false for a net input\"}",
+            "media": "application/json",
+            "status": 400
+          }
+        }
+      ],
+      "id": "calculate-missing-or-null-price-flag",
+      "operation": "POST /v1/vat/calculate",
+      "sdkExpectation": {}
+    },
+    {
+      "assertions": [
+        {
+          "equals": "15",
+          "message": "exchange",
+          "pointer": "/response/headers/Retry-After"
+        },
+        {
+          "equals": "fixture-request",
+          "message": "exchange",
+          "pointer": "/response/headers/X-Request-ID"
+        }
+      ],
+      "description": "Retry-After exceeds the invocation deadline.",
+      "exchanges": [
+        {
+          "request": {
+            "body": "{\"country\":\"DE\",\"currency\":\"EUR\",\"tax_class_id\":\"standard\",\"gross_amount_minor\":10000,\"price_includes_vat\":false,\"transaction_date\":\"2026-08-28\"}",
+            "headers": {
+              "Idempotency-Key": "fixture-only-retry-id",
+              "X-API-Key": "fixture-only-api-key",
+              "X-Source-ID": "fixture-source"
+            },
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"rate_limit_exceeded\",\"detail\":\"Synthetic rate_limit_exceeded\"}",
+            "headers": {
+              "Retry-After": "15",
+              "X-Request-ID": "fixture-request"
+            },
+            "media": "application/json",
+            "status": 429
+          }
+        }
+      ],
+      "id": "calculate-rate-limit",
+      "operation": "POST /v1/vat/calculate",
+      "sdkExpectation": {
+        "deadlineSeconds": 5,
+        "requestId": "fixture-request",
+        "retry": false,
+        "retryAfterSeconds": 15
+      }
+    },
+    {
+      "assertions": [
+        {
+          "jsonType": "null",
+          "message": "response",
+          "pointer": "/ecb_rate_eur",
+          "step": 0
+        },
+        {
+          "equals": false,
+          "message": "response",
+          "pointer": "/policy/one_national_annual_threshold",
+          "step": 0
+        },
+        {
+          "equals": 4.275,
+          "jsonType": "number",
+          "message": "response",
+          "pointer": "/ecb_rate_eur",
+          "step": 1
+        },
+        {
+          "absent": true,
+          "message": "response",
+          "pointer": "/ecb_rate_eur",
+          "step": 2
+        },
+        {
+          "equals": 0,
+          "message": "request",
+          "pointer": "/annual_turnover_nac",
+          "step": 0
+        }
+      ],
+      "description": "A nullable ECB field can be null, a decimal number, or omitted.",
+      "exchanges": [
+        {
+          "request": {
+            "body": "{\"country\":\"PL\",\"currency\":\"PLN\",\"annual_turnover_nac\":0}",
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"country\":\"PL\",\"currency\":\"PLN\",\"annual_turnover_nac\":0,\"reference_date\":\"2026-01-02\",\"eligibility_status\":\"indeterminate\",\"eligible_for_exemption\":null,\"exceeded_by_nac\":null,\"scheme_type\":\"Synthetic\",\"policy\":{\"one_national_annual_threshold\":false},\"sectorals\":[],\"data_situation_on\":\"2025-12-01\",\"disclaimer\":\"Synthetic example only.\",\"ecb_rate_eur\":null}",
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {
+            "body": "{\"country\":\"PL\",\"currency\":\"PLN\",\"annual_turnover_nac\":0}",
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"country\":\"PL\",\"currency\":\"PLN\",\"annual_turnover_nac\":0,\"reference_date\":\"2026-01-02\",\"eligibility_status\":\"indeterminate\",\"eligible_for_exemption\":null,\"exceeded_by_nac\":null,\"scheme_type\":\"Synthetic\",\"policy\":{\"one_national_annual_threshold\":false},\"sectorals\":[],\"data_situation_on\":\"2025-12-01\",\"disclaimer\":\"Synthetic example only.\",\"ecb_rate_eur\":4.275,\"ecb_rate_date\":\"2026-01-02\"}",
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {
+            "body": "{\"country\":\"PL\",\"currency\":\"PLN\",\"annual_turnover_nac\":0}",
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"country\":\"PL\",\"currency\":\"PLN\",\"annual_turnover_nac\":0,\"reference_date\":\"2026-01-02\",\"eligibility_status\":\"indeterminate\",\"eligible_for_exemption\":null,\"exceeded_by_nac\":null,\"scheme_type\":\"Synthetic\",\"policy\":{\"one_national_annual_threshold\":false},\"sectorals\":[],\"data_situation_on\":\"2025-12-01\",\"disclaimer\":\"Synthetic example only.\"}",
+            "media": "application/json",
+            "status": 200
+          }
+        }
+      ],
+      "id": "sme-decimal-null-and-omission",
+      "operation": "POST /v1/vat/sme-eligibility",
+      "sdkExpectation": {}
+    },
+    {
+      "assertions": [
+        {
+          "equals": "",
+          "message": "response",
+          "pointer": "/rules/0/scope/dispatch_country",
+          "step": 0
+        },
+        {
+          "equals": "service",
+          "message": "response",
+          "pointer": "/rules/0/scope/supply_kind",
+          "step": 0
+        }
+      ],
+      "description": "Services can use an empty dispatch country.",
+      "exchanges": [
+        {
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            }
+          },
+          "response": {
+            "body": "{\"rules\":[{\"id\":\"fixture-rule\",\"scope\":{\"integration_id\":0,\"source_profile_id\":0,\"product\":\"\",\"variant\":\"\",\"country\":\"DE\",\"scheme\":\"\",\"code\":\"\",\"catalog_version\":\"\",\"supply_kind\":\"service\",\"customer_type\":\"\",\"supplier_country\":\"\",\"dispatch_country\":\"\",\"fixed_country\":\"\",\"import_origin\":\"\",\"marketplace\":false,\"excise\":false,\"new_means_of_transport\":false,\"assembly\":false},\"revision\":1,\"action\":\"selected\",\"option_meaning\":\"\",\"alternatives_meaning\":\"\",\"information\":{\"schema_version\":\"\",\"status\":\"\",\"query\":{\"country\":\"\",\"scheme\":\"\",\"code\":\"\",\"date\":\"\"},\"informational_only\":false,\"filing_ready\":false,\"legal_applicability\":\"\",\"classification\":null,\"source\":null,\"options\":null,\"warnings\":null,\"disclaimer\":\"\",\"source_assumptions\":null},\"option_id\":\"fixture-option\",\"declarations\":{\"basis\":\"synthetic\"},\"effective_from\":\"2026-01-02\",\"effective_to\":null}]}",
+            "media": "application/json",
+            "status": 200
+          }
+        }
+      ],
+      "id": "service-empty-dispatch",
+      "operation": "GET /v1/information/customer-vat/rules",
+      "sdkExpectation": {}
+    },
+    {
+      "assertions": [
+        {
+          "equals": "fixture-opaque-cursor",
+          "message": "response",
+          "pointer": "/next_cursor",
+          "step": 0
+        },
+        {
+          "jsonType": "null",
+          "message": "response",
+          "pointer": "/next_cursor",
+          "step": 1
+        },
+        {
+          "message": "exchange",
+          "pointer": "/request/query/limit",
+          "sameAsStep": 0,
+          "step": 1
+        },
+        {
+          "message": "exchange",
+          "pointer": "/request/query/country",
+          "sameAsStep": 0,
+          "step": 1
+        }
+      ],
+      "description": "Forward the opaque token and retain original filters.",
+      "exchanges": [
+        {
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "query": {
+              "country": "DE",
+              "limit": 1
+            }
+          },
+          "response": {
+            "body": "{\"transactions\":[],\"next_cursor\":\"fixture-opaque-cursor\"}",
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "query": {
+              "country": "DE",
+              "cursor": "fixture-opaque-cursor",
+              "limit": 1
+            }
+          },
+          "response": {
+            "body": "{\"transactions\":[],\"next_cursor\":null}",
+            "media": "application/json",
+            "status": 200
+          }
+        }
+      ],
+      "id": "transaction-cursor-null",
+      "operation": "GET /v1/transactions",
+      "sdkExpectation": {
+        "doneAfter": 2,
+        "preserveFilters": true
+      }
+    },
+    {
+      "assertions": [
+        {
+          "absent": true,
+          "message": "response",
+          "pointer": "/next_cursor",
+          "step": 0
+        },
+        {
+          "equals": false,
+          "message": "response",
+          "pointer": "/filing_ready",
+          "step": 0
+        }
+      ],
+      "description": "Cursor omission denotes exhaustion.",
+      "exchanges": [
+        {
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            }
+          },
+          "response": {
+            "body": "{\"events\":[],\"informational_only\":true,\"filing_ready\":false}",
+            "media": "application/json",
+            "status": 200
+          }
+        }
+      ],
+      "id": "customer-events-cursor-omitted",
+      "operation": "GET /v1/information/customer-vat/events",
+      "sdkExpectation": {}
+    },
+    {
+      "assertions": [],
+      "description": "An immutable JSON export is a byte stream, including formatting.",
+      "exchanges": [
+        {
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "path": {
+              "exportID": 1
+            }
+          },
+          "response": {
+            "bodyFile": "fixtures/payloads/locked-export.json",
+            "headers": {
+              "Content-Disposition": "attachment; filename=\"locked-export.json\""
+            },
+            "media": "application/json",
+            "sha256": "35d90d762ca3a4f9157b7344d344e3d0cce54c97ddaa97e686b600ac867b3bb7",
+            "status": 200
+          }
+        }
+      ],
+      "id": "json-archive-bytes",
+      "operation": "GET /v1/reports/locked-return-periods/union-oss/exports/{exportID}",
+      "sdkExpectation": {
+        "bodyMode": "bytes"
+      }
+    },
+    {
+      "assertions": [],
+      "description": "Preserve BOM, quotes and line endings.",
+      "exchanges": [
+        {
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            },
+            "query": {
+              "from": "2026-01-01",
+              "to": "2026-01-31"
+            }
+          },
+          "response": {
+            "bodyFile": "fixtures/payloads/transactions.csv",
+            "headers": {
+              "Content-Disposition": "attachment; filename=\"transactions.csv\""
+            },
+            "media": "text/csv; charset=utf-8",
+            "sha256": "fc6c27e55415c2b166f7525e70c3fa8bea16976c07348a39c72e8153c1482746",
+            "status": 200
+          }
+        }
+      ],
+      "id": "csv-export-bytes",
+      "operation": "GET /v1/transactions/export",
+      "sdkExpectation": {
+        "bodyMode": "bytes"
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "ok",
+          "message": "response",
+          "pointer": "/status",
+          "step": 0
+        }
+      ],
+      "description": "Health accepts an unauthenticated request.",
+      "exchanges": [
+        {
+          "request": {},
+          "response": {
+            "body": "{\"status\":\"ok\"}",
+            "media": "application/json",
+            "status": 200
+          }
+        }
+      ],
+      "id": "public-health",
+      "operation": "GET /health",
+      "sdkExpectation": {}
+    },
+    {
+      "assertions": [
+        {
+          "equals": "ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "message": "response",
+          "pointer": "/context_id",
+          "step": 0
+        },
+        {
+          "equals": "sandbox",
+          "message": "response",
+          "pointer": "/environment",
+          "step": 0
+        },
+        {
+          "equals": "missing_api_key",
+          "message": "response",
+          "pointer": "/error",
+          "step": 1
+        }
+      ],
+      "description": "Read trusted context and confirm fail-closed on missing credentials.",
+      "exchanges": [
+        {
+          "request": {
+            "headers": {
+              "X-API-Key": "fixture-only-api-key"
+            }
+          },
+          "response": {
+            "body": "{\"context_id\":\"ctx_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"environment\":\"sandbox\",\"scopes\":[\"calculate-only\"]}",
+            "headers": {
+              "Cache-Control": "no-store",
+              "X-VAT-Environment": "sandbox"
+            },
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {},
+          "response": {
+            "body": "{\"error\":\"missing_api_key\",\"detail\":\"Synthetic missing_api_key\"}",
+            "headers": {
+              "Cache-Control": "no-store"
+            },
+            "media": "application/json",
+            "status": 401
+          }
+        }
+      ],
+      "id": "auth-context-discovery",
+      "operation": "GET /v1/auth/context",
+      "sdkExpectation": {
+        "failedStrictPreflightSendsMutation": false
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "sandbox",
+          "message": "response",
+          "pointer": "/environment",
+          "step": 0
+        }
+      ],
+      "description": "Only explicit caller-invoked sandbox registration is accepted.",
+      "exchanges": [
+        {
+          "request": {
+            "body": "{\"type\":\"anonymous\",\"requested_credential_type\":\"api_key\",\"account_id\":\"00000000-0000-4000-8000-000000000001\",\"agent_name\":\"Synthetic\"}",
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"registration_id\":\"00000000-0000-4000-8000-000000000003\",\"claim_token\":\"fixture-only-claim-token\",\"verification_uri\":\"https://example.invalid/approve\",\"expires_in\":900,\"interval\":5,\"environment\":\"sandbox\",\"scopes\":[\"calculate-only\"]}",
+            "media": "application/json",
+            "status": 202
+          }
+        }
+      ],
+      "id": "agent-registration",
+      "operation": "POST /agent/auth",
+      "sdkExpectation": {
+        "retryAmbiguousRegistration": false
+      }
+    },
+    {
+      "assertions": [
+        {
+          "equals": "authorization_pending",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        },
+        {
+          "equals": "fixture-only-api-key",
+          "message": "response",
+          "pointer": "/api_key",
+          "step": 1
+        },
+        {
+          "equals": "registration_closed",
+          "message": "response",
+          "pointer": "/error",
+          "step": 2
+        }
+      ],
+      "description": "Pending invokes caller-controlled polling. Closure is terminal.",
+      "exchanges": [
+        {
+          "request": {
+            "body": "{\"claim_token\":\"fixture-only-claim-token\"}",
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"authorization_pending\",\"detail\":\"Synthetic authorization_pending\"}",
+            "headers": {
+              "Retry-After": "5"
+            },
+            "media": "application/json",
+            "status": 409
+          }
+        },
+        {
+          "request": {
+            "body": "{\"claim_token\":\"fixture-only-claim-token\"}",
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"credential_type\":\"api_key\",\"api_key\":\"fixture-only-api-key\",\"environment\":\"sandbox\",\"scopes\":[\"calculate-only\"],\"expires_at\":\"2026-01-03T00:00:00Z\"}",
+            "media": "application/json",
+            "status": 200
+          }
+        },
+        {
+          "request": {
+            "body": "{\"claim_token\":\"fixture-only-claim-token\"}",
+            "media": "application/json"
+          },
+          "response": {
+            "body": "{\"error\":\"registration_closed\",\"detail\":\"Synthetic registration_closed\"}",
+            "media": "application/json",
+            "status": 409
+          }
+        }
+      ],
+      "id": "agent-claim",
+      "operation": "POST /agent/auth/claim",
+      "sdkExpectation": {
+        "callerControlledPolling": true,
+        "redactCredentialFields": true,
+        "terminalCode": "registration_closed"
+      }
+    }
+  ],
+  "formatVersion": 1,
+  "supplyReferenceCases": [
+    {
+      "id": "ascii-limit",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "normalized": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "required": true,
+      "utf8Bytes": 160,
+      "valid": true
+    },
+    {
+      "id": "ascii-over",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "normalized": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "required": true,
+      "utf8Bytes": 161,
+      "valid": false
+    },
+    {
+      "id": "two-byte-limit",
+      "input": "éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé",
+      "normalized": "éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé",
+      "required": true,
+      "utf8Bytes": 160,
+      "valid": true
+    },
+    {
+      "id": "two-byte-over",
+      "input": "ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé",
+      "normalized": "ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé",
+      "required": true,
+      "utf8Bytes": 162,
+      "valid": false
+    },
+    {
+      "id": "four-byte-limit",
+      "input": "🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠",
+      "normalized": "🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠",
+      "required": true,
+      "utf8Bytes": 160,
+      "valid": true
+    },
+    {
+      "id": "four-byte-over",
+      "input": "🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠",
+      "normalized": "🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠",
+      "required": true,
+      "utf8Bytes": 164,
+      "valid": false
+    },
+    {
+      "id": "trim-before-limit",
+      "input": " aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\t",
+      "normalized": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "required": true,
+      "utf8Bytes": 160,
+      "valid": true
+    },
+    {
+      "id": "supply-normalized-reference",
+      "input": " Case a  b",
+      "normalized": "Case a  b",
+      "required": true,
+      "utf8Bytes": 9,
+      "valid": true
+    },
+    {
+      "id": "nul-is-invalid",
+      "input": "a\u0000b",
+      "normalized": "a\u0000b",
+      "required": true,
+      "utf8Bytes": 3,
+      "valid": false
+    },
+    {
+      "id": "required-empty",
+      "input": "\t ",
+      "normalized": "",
+      "required": true,
+      "utf8Bytes": 0,
+      "valid": false
+    },
+    {
+      "id": "optional-empty",
+      "input": "\t",
+      "normalized": "",
+      "required": false,
+      "utf8Bytes": 0,
+      "valid": true
+    },
+    {
+      "id": "go-excludes-bom",
+      "input": "﻿id",
+      "normalized": "﻿id",
+      "required": true,
+      "utf8Bytes": 5,
+      "valid": true
+    },
+    {
+      "id": "go-excludes-unit-separator",
+      "input": "\u001fid",
+      "normalized": "\u001fid",
+      "required": true,
+      "utf8Bytes": 3,
+      "valid": true
+    },
+    {
+      "id": "malformed-utf8",
+      "inputHex": "c328",
+      "required": true,
+      "valid": false
+    }
+  ]
+}

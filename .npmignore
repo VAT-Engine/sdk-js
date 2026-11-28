@@ -11,6 +11,10 @@ mcp.json
 MEMORY.md
 memory.jsonl
 memory.sqlite*
+.npmrc
+.venv/
+__pycache__/
+*.py[cod]
 
 # Local environment files and package archives
 .env
