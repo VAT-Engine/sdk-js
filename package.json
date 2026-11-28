@@ -1,0 +1,46 @@
+{
+  "name": "@vat-engine/sdk",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Server-side TypeScript and JavaScript SDK for VAT Engine",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VAT-Engine/sdk-js.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": "^22.13.0 || ^24.0.0 || ^26.0.0",
+    "npm": "^11.0.0"
+  },
+  "packageManager": "npm@11.20.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/int64.js",
+    "dist/int64.d.ts"
+  ],
+  "scripts": {
+    "generate": "node scripts/generate-contract.mjs",
+    "check:generated": "node scripts/generate-contract.mjs --check",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.test.json",
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && npm run typecheck && node --test test/*.test.mjs",
+    "check:pack": "node scripts/check-package.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.16.0",
+    "openapi-typescript": "7.13.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.74.0",
+    "yaml": "2.9.1"
+  }
+}

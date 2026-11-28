@@ -1,6 +1,6 @@
 # VAT Engine SDK-JS — implementation plan
 
-**Status:** JS-00 verified · JS-01 verified · JS-02 in progress · 2026-11-28
+**Status:** JS-00 verified · JS-01 verified · JS-02 ready for review · 2026-11-28
 **Repository:** `VAT-Engine/sdk-js` · **Intended package:** `@vat-engine/sdk` (namespace pending)  
 **Requirements:** Approved Shared SDK Standard v1.0, reflected in the [public requirements extract](../contract/REQUIREMENTS.md) and the [pinned public contract](../contract/README.md).
 **Release model:** Independent Gate A for the direct HTTP client and Gate B for optional durable delivery, approved on 2026-11-28. Publication and hosted acceptance have separate evidence and authorization.
@@ -60,12 +60,12 @@ At the beginning of every task, check the branch, commit, and working tree. Read
 **Objective:** Choose package and toolchain settings and verify precise representations.  
 **Dependencies:** JS-01 contract and conformance corpus.
 
-Review the [proposed Node.js package foundation](decisions/0001-node-package-foundation.md) and its prototype evidence before adopting the toolchain or finalizing public types.
+Follow the [approved Node.js package foundation](decisions/0001-node-package-foundation.md). The implementation builds on SDK [#7](https://github.com/VAT-Engine/sdk-js/pull/7) and [#8](https://github.com/VAT-Engine/sdk-js/pull/8), both merged into `main`.
 
-- [ ] Approve supported Node versions and package formats (initial proposals Node 22+ and ESM/CJS; verify maintained runtime versions and consumers), toolchain, compiler settings, package manager, export strategy and minimal dependencies.
-- [ ] Prototype exact JSON representation before fixing public types: select tested lossless parser/serializer, define int64 public API (`bigint` or other approved representation), reject unsafe number inputs, preserve string amounts and ordinary floats. Verify generated type overrides match runtime behavior.
-- [ ] Build strict TypeScript/lint/test/build/pack pipeline and locked dependency installation. Implement GitHub Actions baseline with approved SHA-pinned actions and least privileges; test it against active repository rules and applicable organization policies. Change required checks only after they run successfully and the owner authorizes the change.
-- [ ] Define the npm `files` allowlist for release artifacts. Run build and test from a public-only checkout. Inspect the package file list with `npm pack --dry-run --json`, including a local test with synthetic ignored files present. Keep local agent files and settings out of the archive.
+- [x] Approve supported Node versions and package formats, toolchain, compiler settings, package manager, export strategy and minimal dependencies.
+- [x] Implement native exact JSON and verify the generated mapping. Use `bigint` for declared int64 outputs and reject unsafe number inputs. Preserve quoted amounts, ordinary doubles, omission, null, false and the bytes of attachments.
+- [ ] Verify the SHA-pinned, read-only GitHub Actions workflow against the active repository and organization policies. The strict TypeScript, lint, test, build and pack pipeline passed locally after locked installation. Changes to required checks need separate owner authorization.
+- [x] Define and verify the npm `files` allowlist. Clean public-only builds and tests passed. Dry-run pack, production tarball inspection and a staged pack with synthetic ignored files verified the same seven published files.
 **Acceptance:** installable local package skeleton; clean consumer import tests for agreed formats; deterministic build/type generation; precision proof across shared fixtures. No registry publish.
 
 ### JS-03 — Shared HTTP transport
@@ -181,7 +181,7 @@ Each checklist records scope and acceptance. Update this table after each milest
 | --- | --- | --- | --- |
 | JS-00 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28. Verified 19 representative local excludes, the private/local instruction match, Git index/history exclusions and Git/npm archive boundaries. |
 | JS-01 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28 on the merged SDK revision and its reviewed upstream handoff. A Git archive of the accepted revision verified 55 operations, 959 local references, 22 cases with 33 exchanges and 14 supply-reference cases. Seven tooling tests passed and two offline assemblies matched byte-for-byte. The approved operation matrix matched all 55 method/path identities. |
-| JS-02 | In progress | [Architecture proposal](decisions/0001-node-package-foundation.md) / — | Node 22/24/26, a shared ESM entry, exact JSON, generation and pack boundaries tested in a temporary prototype. Architecture approval, package implementation and CI acceptance remain pending. |
+| JS-02 | Ready for review | [Accepted ADR](decisions/0001-node-package-foundation.md) / [Architecture #8](https://github.com/VAT-Engine/sdk-js/pull/8) | The JS-01 pin generated all 55 operations and classified 273 numeric declarations. Independent Git archives passed locked install, deterministic generation and build, lint, 28 Node tests and JS/TS ESM and CommonJS tarball tests on 22.13.0, 22.23.5, 24.0.0, 24.22.3, 26.0.0 and 26.13.1. The Python verifier and seven tooling tests passed. Hosted CI and review are recorded on the implementation PR. |
 | JS-03 | Planned | — / — | Transport, API encoding and normal entry-point test evidence pending. |
 | JS-04 | Planned | — / — | Auth, replay and fail-closed results pending. Strict context claim requires authenticated hosted acceptance. |
 | JS-05 | Planned | — / — | Operation methods, coverage and examples pending. |
