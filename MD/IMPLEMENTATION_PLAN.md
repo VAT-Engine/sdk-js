@@ -191,4 +191,6 @@ Each checklist records scope and acceptance. Update this table after each milest
 | JS-11 | Planned | — / — | Failure handling, compatibility and recovery evidence pending. |
 | JS-12 | Planned | — / — | Gate B acceptance, pilot and release authorization pending. |
 
+The [PR #6 fixture follow-up](https://github.com/VAT-Engine/sdk-js/pull/6#discussion_r4726920232) verifies `400 missing_price_includes_vat` for both omitted and null amount-basis flags. The contract verifier and all seven tooling tests passed with the refreshed fixture digest.
+
 The [public contract pin](../contract/manifest.json) applies to JS-00 and JS-01. JS-02 awaits its own authorization. npm package publication requires namespace resolution and a separate decision.

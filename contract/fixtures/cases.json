@@ -560,6 +560,18 @@
           "message": "request",
           "pointer": "/price_includes_vat",
           "step": 1
+        },
+        {
+          "equals": "missing_price_includes_vat",
+          "message": "response",
+          "pointer": "/error",
+          "step": 0
+        },
+        {
+          "equals": "missing_price_includes_vat",
+          "message": "response",
+          "pointer": "/error",
+          "step": 1
         }
       ],
       "description": "Omitted and null values are invalid for the required boolean.",
@@ -578,7 +590,7 @@
             "schemaNote": "Required boolean omitted."
           },
           "response": {
-            "body": "{\"error\":\"invalid_request\",\"detail\":\"Synthetic invalid_request\"}",
+            "body": "{\"error\":\"missing_price_includes_vat\",\"detail\":\"price_includes_vat is required and must explicitly be true for a gross input or false for a net input\"}",
             "media": "application/json",
             "status": 400
           }
@@ -599,7 +611,7 @@
             "schemaNote": "Required non-nullable boolean."
           },
           "response": {
-            "body": "{\"error\":\"invalid_request\",\"detail\":\"Synthetic invalid_request\"}",
+            "body": "{\"error\":\"missing_price_includes_vat\",\"detail\":\"price_includes_vat is required and must explicitly be true for a gross input or false for a net input\"}",
             "media": "application/json",
             "status": 400
           }

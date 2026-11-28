@@ -6,7 +6,7 @@
   },
   "files": {
     "allowlist.txt": "4ee9989ba121cc30f0dfce86a8619f06183a7a1e35c838e0f14fcd497bb21d83",
-    "fixtures/cases.json": "9c2969f2a0fbaa24f814092c7a061347fa0426d311ec14c95553d14f5a5f01fd",
+    "fixtures/cases.json": "a658480b03f71c5377552c7b982ae28ad450688cf98e0fdf646a7183977acd8d",
     "fixtures/payloads/locked-export.json": "35d90d762ca3a4f9157b7344d344e3d0cce54c97ddaa97e686b600ac867b3bb7",
     "fixtures/payloads/transactions.csv": "fc6c27e55415c2b166f7525e70c3fa8bea16976c07348a39c72e8153c1482746",
     "openapi.yaml": "5158c7c19479d3e6db0e5617b249c7520177778dbabed8a8975c17319275f065",
