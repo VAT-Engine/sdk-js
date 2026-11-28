@@ -21,6 +21,9 @@ export type WireShape =
 type Media = Readonly<Record<string, WireShape>>;
 
 export interface OperationShape {
+  readonly authentication: "anonymous" | "api_key" | "claim_token";
+  readonly bodyRequired: boolean;
+  readonly requiredParameters: readonly string[];
   readonly request: Media;
   readonly parameters: Media;
   readonly responses: Readonly<Record<string, {

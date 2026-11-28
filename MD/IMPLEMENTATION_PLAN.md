@@ -1,6 +1,6 @@
 # VAT Engine SDK-JS — implementation plan
 
-**Status:** JS-00 verified · JS-01 verified · JS-02 ready for review · 2026-11-28
+**Status:** JS-00 verified · JS-01 verified · JS-02 verified · JS-03 ready for review · 2026-11-28
 **Repository:** `VAT-Engine/sdk-js` · **Intended package:** `@vat-engine/sdk` (namespace pending)  
 **Requirements:** Approved Shared SDK Standard v1.0, reflected in the [public requirements extract](../contract/REQUIREMENTS.md) and the [pinned public contract](../contract/README.md).
 **Release model:** Independent Gate A for the direct HTTP client and Gate B for optional durable delivery, approved on 2026-11-28. Publication and hosted acceptance have separate evidence and authorization.
@@ -73,9 +73,9 @@ Follow the [approved Node.js package foundation](decisions/0001-node-package-fou
 **Objective:** Create the shared transport and preserve wire semantics.  
 **Dependencies:** JS-02 package foundation and JS-01 fixtures.
 
-- [ ] Native Fetch or approved transport; normalized trusted URL, optional X-API-Key, public no-key access, configurable timeout, total deadline, AbortSignal and cleanup.
-- [ ] Exact serialization, metadata, response decoding by operation/media, URL/query/header encoding, structured typed errors and graceful non-JSON errors; redact API keys, claim tokens, credentials and sensitive payloads.
-- [ ] Prevent cross-origin credential forwarding and unsafe redirects; immutable request/key/destination capture per logical invocation; no hidden network calls or telemetry.
+- [x] Native Fetch with normalized HTTPS destinations, explicit HTTP loopback opt-in, operation-specific API key attachment, timeout, total deadline, cancellation and cleanup.
+- [x] Encode approved path, query and header parameters and exact JSON. Decode documented successes by status and media. Preserve attachment bytes and expose response metadata. Classify incomplete and undocumented HTTP errors without changing their schemas.
+- [x] Reject redirects and capture destination, credentials, semantic headers and body before dispatch. Keep raw upstream errors, caller abort reasons, credentials and payloads outside error diagnostics.
 **Acceptance:** local fault-injection/mock HTTP tests cover deadlines, abort, transport errors, response metadata, redirects, and correct raw request bytes.
 
 ### JS-04 — Authentication, context and resilience
@@ -181,8 +181,8 @@ Each checklist records scope and acceptance. Update this table after each milest
 | --- | --- | --- | --- |
 | JS-00 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28. Verified 19 representative local excludes, the private/local instruction match, Git index/history exclusions and Git/npm archive boundaries. |
 | JS-01 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28 on the merged SDK revision and its reviewed upstream handoff. A Git archive of the accepted revision verified 55 operations, 959 local references, 22 cases with 33 exchanges and 14 supply-reference cases. Seven tooling tests passed and two offline assemblies matched byte-for-byte. The approved operation matrix matched all 55 method/path identities. |
-| JS-02 | Ready for review | `109234b` / [#9](https://github.com/VAT-Engine/sdk-js/pull/9) | The JS-01 pin generated all 55 operations and classified 273 numeric declarations. Independent Git archives passed locked install, deterministic generation and build, lint, 28 Node tests and JS/TS ESM and CommonJS tarball tests on 22.13.0, 22.23.5, 24.0.0, 24.22.3, 26.0.0 and 26.13.1. The Python verifier and seven tooling tests passed. The seven-job [hosted workflow](https://github.com/VAT-Engine/sdk-js/actions/runs/46148605465) passed. PR review remains pending. |
-| JS-03 | Planned | — / — | Transport, API encoding and normal entry-point test evidence pending. |
+| JS-02 | Verified | `827338b` / [#9](https://github.com/VAT-Engine/sdk-js/pull/9) | Reviewed PR merged into main with the same tree as final head `ee64593`. All seven [hosted jobs](https://github.com/VAT-Engine/sdk-js/actions/runs/46148833243) passed. A clean archive of the merged revision reproduced generation, passed 28 tests and verified the seven-file package on Node 26.13.1. |
+| JS-03 | Ready for review | `bbd1226` / [#10](https://github.com/VAT-Engine/sdk-js/pull/10) | Clean public archives passed generation, lint, 53 Node tests and the 18-file ESM/CommonJS/TypeScript package check on Node 22.13.0, 22.23.5, 24.0.0, 24.22.3, 26.0.0 and 26.13.1. Local HTTP/TLS and fault injection verified encoding, credential isolation, redirects, diagnostics, time budgets, network loss and both artifact digests on the unchanged CORE pin. The contract verifier and seven tooling tests passed. All seven [hosted CI jobs](https://github.com/VAT-Engine/sdk-js/actions/runs/46153827921) passed. PR review remains pending. |
 | JS-04 | Planned | — / — | Auth, replay and fail-closed results pending. Strict context claim requires authenticated hosted acceptance. |
 | JS-05 | Planned | — / — | Operation methods, coverage and examples pending. |
 | JS-06 | Planned | — / — | Cursor, download and developer-experience fixtures pending. |

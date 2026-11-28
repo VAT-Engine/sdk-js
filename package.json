@@ -24,7 +24,18 @@
     "dist/index.js",
     "dist/index.d.ts",
     "dist/int64.js",
-    "dist/int64.d.ts"
+    "dist/int64.d.ts",
+    "dist/http-transport.js",
+    "dist/http-transport.d.ts",
+    "dist/http-request.js",
+    "dist/http-request.d.ts",
+    "dist/http-response.js",
+    "dist/http-response.d.ts",
+    "dist/http-error.js",
+    "dist/http-error.d.ts",
+    "dist/exact-json.js",
+    "dist/wire-schema.d.ts",
+    "dist/generated/wire.js"
   ],
   "scripts": {
     "generate": "node scripts/generate-contract.mjs",
