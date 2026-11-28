@@ -1,6 +1,6 @@
 # VAT Engine SDK-JS — implementation plan
 
-**Status:** JS-00 verified · JS-01 ready for review · 2026-11-28
+**Status:** JS-00 verified · JS-01 verified · 2026-11-28
 **Repository:** `VAT-Engine/sdk-js` · **Intended package:** `@vat-engine/sdk` (namespace pending)  
 **Requirements:** Approved Shared SDK Standard v1.0, reflected in the [public requirements extract](../contract/REQUIREMENTS.md) and the [pinned public contract](../contract/README.md).
 **Release model:** Independent Gate A for the direct HTTP client and Gate B for optional durable delivery, approved on 2026-11-28. Publication and hosted acceptance have separate evidence and authorization.
@@ -177,8 +177,8 @@ Each checklist records scope and acceptance. Update this table after each milest
 
 | ID | Status | SDK revision / PR | Evidence and remaining conditions |
 | --- | --- | --- | --- |
-| JS-00 | Verified | Local feat/project-initialization based on c1fbdc5 / — | Accepted on 2026-11-28. Verified 19 representative local excludes, the private/local instruction match, Git index/history exclusions and Git/npm archive boundaries. |
-| JS-01 | Ready for review | Local feat/project-initialization based on c1fbdc5 / — | Original OpenAPI digest preserved. Verified 55 operations, 45 scope mappings, 959 references, 22 cases with 33 exchanges, 14 reference cases and seven tooling tests. Two offline assemblies matched byte-for-byte. Public-only checkout passed. Review the two documented sandbox filing error deviations and the proposed method map. |
+| JS-00 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28. Verified 19 representative local excludes, the private/local instruction match, Git index/history exclusions and Git/npm archive boundaries. |
+| JS-01 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28 on the merged SDK revision and its reviewed upstream handoff. A Git archive of the accepted revision verified 55 operations, 959 local references, 22 cases with 33 exchanges and 14 supply-reference cases. Seven tooling tests passed and two offline assemblies matched byte-for-byte. The approved operation matrix matched all 55 method/path identities. |
 | JS-02 | Planned | — / — | Runtime and format, exact integer representation, dependencies and toolchain decisions pending. |
 | JS-03 | Planned | — / — | Transport, API encoding and normal entry-point test evidence pending. |
 | JS-04 | Planned | — / — | Auth, replay and fail-closed results pending. Strict context claim requires authenticated hosted acceptance. |
@@ -193,4 +193,6 @@ Each checklist records scope and acceptance. Update this table after each milest
 
 The [PR #6 fixture follow-up](https://github.com/VAT-Engine/sdk-js/pull/6#discussion_r4726920232) verifies `400 missing_price_includes_vat` for both omitted and null amount-basis flags. The contract verifier and all seven tooling tests passed with the refreshed fixture digest.
 
-The [public contract pin](../contract/manifest.json) applies to JS-00 and JS-01. JS-02 awaits its own authorization. npm package publication requires namespace resolution and a separate decision.
+The [public contract pin](../contract/manifest.json) remains the JS-01 acceptance baseline. On 2026-11-28 the published OpenAPI matched its SHA-256 (`5158c7c19479d3e6db0e5617b249c7520177778dbabed8a8975c17319275f065`). The sandbox filing error correction has been merged upstream for both lock and file. Synchronize the SDK pin and the two affected fixtures in a separate review after the corrected public contract is deployed and verified. This follow-up remains part of the Gate A contract reconfirmation.
+
+npm package publication requires namespace resolution and a separate decision.
