@@ -39,7 +39,14 @@
     "dist/vat-client.js",
     "dist/vat-client.d.ts",
     "dist/resilience.js",
-    "dist/resilience.d.ts"
+    "dist/resilience.d.ts",
+    "dist/core-api.js",
+    "dist/core-api.d.ts",
+    "dist/api-types.d.ts",
+    "dist/generated/api-modules.js",
+    "dist/generated/api-modules.d.ts",
+    "dist/generated/operations.d.ts",
+    "dist/supply-references.js"
   ],
   "scripts": {
     "generate": "node scripts/generate-contract.mjs",

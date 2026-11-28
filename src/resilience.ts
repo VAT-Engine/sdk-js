@@ -37,10 +37,9 @@ function explicitDate(value: unknown): boolean {
   return new Date(day).toISOString().slice(0, 10) === day;
 }
 
-function reference(value: unknown): boolean {
-  // A conservative eligibility check only. The server remains responsible for reference normalization.
-  return typeof value === "string" && value.trim().length > 0 && !value.includes("\0") &&
-    new TextEncoder().encode(value).byteLength <= 160;
+function hasReference(value: unknown): boolean {
+  // Supply references have already been normalized at request preparation.
+  return typeof value === "string" && value.length !== 0;
 }
 
 function eligibleSupply(body: Record<string, unknown>): boolean {
@@ -49,14 +48,14 @@ function eligibleSupply(body: Record<string, unknown>): boolean {
       !event || typeof event !== "object" || Array.isArray(event)) return false;
   const fields = event as Record<string, unknown>;
   const country = (value: unknown) => typeof value === "string" && value.length === 2 && /^[A-Z]{2}$/u.test(value);
-  if (!reference(fields.external_order_id) || !reference(fields.external_line_id) ||
+  if (!hasReference(fields.external_order_id) || !hasReference(fields.external_line_id) ||
       typeof fields.event_version !== "bigint" || fields.event_version < 1n ||
       !country(fields.supplier_establishment_country) || !country(fields.dispatch_country)) return false;
   if (fields.event_type === "sale") {
     return fields.external_event_id === undefined && body.original_supply_event_id === undefined;
   }
   return ["refund", "cancellation", "credit_note", "adjustment"].some((kind) => kind === fields.event_type) &&
-    reference(fields.external_event_id) && typeof body.original_supply_event_id === "string" &&
+    hasReference(fields.external_event_id) && typeof body.original_supply_event_id === "string" &&
     /^[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/iu.test(body.original_supply_event_id);
 }
 

@@ -1,4 +1,6 @@
 import { decodeRequestJson } from "./exact-json.js";
+import { createApiModules } from "./generated/api-modules.js";
+import type { ApiModules } from "./generated/api-modules.js";
 import { VatTransportError } from "./http-error.js";
 import type { HttpErrorKind } from "./http-error.js";
 import { normalizeBase } from "./http-request.js";
@@ -36,7 +38,7 @@ export interface VatClientOptions extends HttpTransportOptions {
   readonly circuit?: CircuitOptions;
 }
 
-export interface VatClient {
+export interface VatClient extends ApiModules {
   request(operation: string, options?: HttpRequestOptions): Promise<HttpTransportResponse>;
   getAuthContext(options?: Pick<HttpRequestOptions, "timeoutMs" | "deadlineMs" | "signal">): Promise<AuthContext>;
   /** Applies to subsequent calls. Strict calls verify the replacement key before protected dispatch. */
@@ -233,6 +235,7 @@ export function createVatClient(options: VatClientOptions = {}): VatClient {
   }
 
   return Object.freeze({
+    ...createApiModules(request),
     request,
     async getAuthContext(input?: Pick<HttpRequestOptions, "timeoutMs" | "deadlineMs" | "signal">) {
       return parseContext(await request(contextOperation, input), binding);

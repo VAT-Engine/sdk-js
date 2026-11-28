@@ -1,6 +1,6 @@
 # VAT Engine SDK-JS — implementation plan
 
-**Status:** JS-00 through JS-03 verified · JS-04 ready for review · 2026-11-28
+**Status:** JS-00 through JS-04 verified · JS-05 ready for review · 2026-11-28
 **Repository:** `VAT-Engine/sdk-js` · **Intended package:** `@vat-engine/sdk` (namespace pending)  
 **Requirements:** Approved Shared SDK Standard v1.0, reflected in the [public requirements extract](../contract/REQUIREMENTS.md) and the [pinned public contract](../contract/README.md).
 **Release model:** Independent Gate A for the direct HTTP client and Gate B for optional durable delivery, approved on 2026-11-28. Publication and hosted acceptance have separate evidence and authorization.
@@ -93,12 +93,14 @@ Follow the [approved Node.js package foundation](decisions/0001-node-package-fou
 **Objective:** Cover every pinned operation with explicit discoverable methods.  
 **Dependencies:** JS-03 transport and JS-04 auth/resilience; JS-01 operation mapping.
 
-- [ ] Authentication/context and explicit agent registration/claim (where approved); system health/readiness, classification and tax classes.
-- [ ] VAT numeric calculation and rates; information lookup/resolution/conditional preview; SME and compliance.
-- [ ] Sources, tax registrations and committed supplies (sales, refunds, revisions); operational-key restrictions.
-- [ ] Customer VAT events/rules/attention/declarations/selection/classification/reprocessing/retirement/provisional rates.
-- [ ] Transaction history/detail/aggregation, reports, OSS/IOSS and locked-return operations; never imply filing authority or submission.
-- [ ] Prove every pinned operation has an explicit method, typed inputs/outputs, status/media behavior, contract test and example/reference.
+The [CORE interface decision](decisions/0002-core-api-interface.md) defines the public calling convention and [method map](../contract/js-methods.json).
+
+- [x] Expose context discovery, explicit agent registration and claim, system health and readiness, classification and tax classes.
+- [x] Distinguish persisted VAT calculations from rates, information lookup, resolution and previews. Cover SME and compliance.
+- [x] Cover sources, tax registrations and committed supplies using the shared authentication and resilience path. Normalize and validate supply identity references before encoding.
+- [x] Cover customer VAT events, rules, attention, declarations, selection, classification, reprocessing, retirement and provisional rates.
+- [x] Cover transaction history, detail, aggregation, reports, OSS/IOSS and locked-return operations, including documented JSON and byte media.
+- [x] Verify every pinned identity through its public method, with typed input and result declarations, wire and error checks, and the method reference.
 **Acceptance:** 100% of pinned supported operations, measured via method+path matrix; no deferred APIs; preview/persisted/committed and report-state semantics distinct.
 
 ### JS-06 — Pagination, exports and developer experience
@@ -183,8 +185,8 @@ Each checklist records scope and acceptance. Update this table after each milest
 | JS-01 | Verified | `bbab7c4` / [#6](https://github.com/VAT-Engine/sdk-js/pull/6) | Accepted on 2026-11-28 on the merged SDK revision and its reviewed upstream handoff. A Git archive of the accepted revision verified 55 operations, 959 local references, 22 cases with 33 exchanges and 14 supply-reference cases. Seven tooling tests passed and two offline assemblies matched byte-for-byte. The approved operation matrix matched all 55 method/path identities. |
 | JS-02 | Verified | `827338b` / [#9](https://github.com/VAT-Engine/sdk-js/pull/9) | Reviewed PR merged into main with the same tree as final head `ee64593`. All seven [hosted jobs](https://github.com/VAT-Engine/sdk-js/actions/runs/46148833243) passed. A clean archive of the merged revision reproduced generation, passed 28 tests and verified the seven-file package on Node 26.13.1. |
 | JS-03 | Verified | `0fc9a91` / [#10](https://github.com/VAT-Engine/sdk-js/pull/10) | Reviewed PR merged with the same tree as final head `0ecabab`. The seven-job [hosted workflow](https://github.com/VAT-Engine/sdk-js/actions/runs/46153924013) passed. A clean archive of the merged revision passed deterministic generation, 53 tests and the 18-file package check on Node 26.13.1. |
-| JS-04 | Ready for review | `add89f9` / [#11](https://github.com/VAT-Engine/sdk-js/pull/11) | Clean public archives passed generation, lint, 77 Node tests and the 22-file ESM/CommonJS/TypeScript package check on Node 22.13.0, 22.23.5, 24.0.0, 24.22.3, 26.0.0 and 26.13.1. The contract verifier, seven tooling tests and all seven [hosted CI jobs](https://github.com/VAT-Engine/sdk-js/actions/runs/46155995952) passed. Failed strict preflight sent zero business requests. A separate mocked server received the assertion, preserved the contract error and wrote zero records or jobs. Local fault injection covered replay, revocation, circuit recovery and unknown outcomes. Authenticated hosted strict-mode acceptance remains pending. |
-| JS-05 | Planned | — / — | Operation methods, coverage and examples pending. |
+| JS-04 | Verified | `ed73736` / [#11](https://github.com/VAT-Engine/sdk-js/pull/11) | The merged revision matches the final review tree `0790f5d`. All seven [hosted jobs](https://github.com/VAT-Engine/sdk-js/actions/runs/46156092347) passed. A clean archive of the merged revision passed 77 tests and the 22-file package check. Authenticated hosted strict-mode acceptance remains a release requirement. |
+| JS-05 | Ready for review | — | All 55 pinned operations have explicit typed methods. Controlled HTTP exercised 61 documented success media/status combinations and 329 error statuses. Clean archives passed 140 Node tests, type checks, generation and the 29-file ESM/CommonJS package check on Node 22.13.0, 22.23.5, 24.0.0, 24.22.3, 26.0.0 and 26.13.1. The contract verifier and seven tooling tests passed. Native Fetch sends one attempt for writes and credential claims that return HTTP 421. |
 | JS-06 | Planned | — / — | Cursor, download and developer-experience fixtures pending. |
 | JS-07 | Planned | — / — | Gate A package and consumer tests, hosted acceptance, reviews and publication authorization pending. |
 | JS-08 | Planned | — / — | Adapter, packaging and documented durability semantics pending. |

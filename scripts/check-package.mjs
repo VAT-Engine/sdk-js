@@ -15,6 +15,8 @@ const expected = [
   "dist/http-transport.js", "dist/http-transport.d.ts", "dist/http-request.js", "dist/http-request.d.ts",
   "dist/http-response.js", "dist/http-response.d.ts", "dist/http-error.js", "dist/http-error.d.ts",
   "dist/vat-client.js", "dist/vat-client.d.ts", "dist/resilience.js", "dist/resilience.d.ts",
+  "dist/core-api.js", "dist/core-api.d.ts", "dist/api-types.d.ts", "dist/generated/api-modules.js",
+  "dist/generated/api-modules.d.ts", "dist/generated/operations.d.ts", "dist/supply-references.js",
 ].sort();
 const tsc = join(root, "node_modules/typescript/bin/tsc");
 const npm = process.env.npm_execpath;
@@ -97,7 +99,7 @@ const resilient = createVatClient({
     });
   },
 });
-assert.equal((await resilient.getAuthContext()).contextId, contextId);
+assert.equal((await resilient.auth.getContext()).data.context_id, contextId);
 `);
   writeFileSync(join(consumer, "cjs.cjs"), `
 const assert = require("node:assert/strict");
@@ -110,6 +112,10 @@ async function check() {
   assert.equal(sdk.createHttpTransport, esm.createHttpTransport);
   assert.equal(sdk.createVatClient, esm.createVatClient);
   assert.equal(sdk.UnknownOutcomeError, esm.UnknownOutcomeError);
+  const health = await sdk.createVatClient({
+    fetch: async () => new Response('{"status":"ok"}', { headers: { "Content-Type": "application/json" } }),
+  }).system.health();
+  assert.equal(health.data.status, "ok");
   const client = sdk.createHttpTransport({ fetch: async () => new Response("fixture", { status: 503 }) });
   await assert.rejects(client.request("GET /health"), {
     name: "VatTransportError", kind: "server", status: 503,
@@ -121,10 +127,15 @@ check().catch((error) => {
 });
 `);
   writeFileSync(join(consumer, "esm.mts"), `
-import { createHttpTransport, toInt64, type HttpTransportResponse, type Int64Input } from "@vat-engine/sdk";
+import { createHttpTransport, createVatClient, toInt64, type ApiInput, type ApiResult,
+  type HttpTransportResponse, type Int64Input } from "@vat-engine/sdk";
 const value: Int64Input = 9223372036854775807n;
 const bigint: bigint = toInt64(value);
 const response: Promise<HttpTransportResponse> = createHttpTransport().request("GET /health");
+const input: ApiInput<"vat.calculateAndPersist"> = {
+  body: { country: "DE", currency: "EUR", tax_class_id: "standard", gross_amount_minor: 99n, price_includes_vat: false },
+};
+const result: Promise<ApiResult<"vat.calculateAndPersist">> = createVatClient().vat.calculateAndPersist(input);
 `);
   writeFileSync(join(consumer, "cjs.cts"), `
 import sdk = require("@vat-engine/sdk");
@@ -133,6 +144,9 @@ const bigint: bigint = sdk.toInt64(value);
 const params: sdk.HttpRequestOptions = { query: { limit: 1 } };
 const response: Promise<sdk.HttpTransportResponse> = sdk.createHttpTransport().request("GET /v1/transactions", params);
 const context: Promise<sdk.AuthContext> = sdk.createVatClient({ retry: false }).getAuthContext();
+const download: Promise<sdk.ApiResult<"transactions.export">> = sdk.createVatClient().transactions.export({
+  query: { from: "2026-01-01", to: "2026-01-31" },
+});
 `);
   for (const entry of ["esm.mjs", "cjs.cjs"]) capture(process.execPath, [entry], consumer);
   capture(process.execPath, [

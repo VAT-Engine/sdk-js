@@ -16,7 +16,7 @@ export interface HttpTransportOptions {
   readonly deadlineMs?: number;
   readonly maxResponseBytes?: number;
   readonly allowInsecureLoopback?: boolean;
-  /** Trusted Fetch-compatible implementation. It must honor manual redirects and verify TLS. */
+  /** Trusted Fetch adapter. It must honor manual redirects, verify TLS and avoid implicit request replay. */
   readonly fetch?: typeof globalThis.fetch;
 }
 
@@ -71,6 +71,7 @@ export function createTransportRuntime(options: HttpTransportOptions): Transport
     const limit = boundedInteger(options.maxResponseBytes ?? defaultResponseLimit, 128 * 1024 * 1024);
     const fetchRequest = options.fetch ?? globalThis.fetch;
     if (typeof fetchRequest !== "function") throw new TypeError();
+    const useNativeFetch = fetchRequest === globalThis.fetch;
 
     return {
       base,
@@ -92,7 +93,7 @@ export function createTransportRuntime(options: HttpTransportOptions): Transport
         }
       },
       send(invocation, caller = invocation.caller, onDispatch) {
-        return execute(fetchRequest, invocation, caller, limit, onDispatch);
+      return execute(fetchRequest, invocation, caller, limit, useNativeFetch, onDispatch);
       },
     };
   } catch {
@@ -100,8 +101,31 @@ export function createTransportRuntime(options: HttpTransportOptions): Transport
   }
 }
 
+interface NativeRequestInit extends RequestInit {
+  duplex?: "half";
+}
+
+function fetchOptions(prepared: PreparedRequest, signal: AbortSignal, native: boolean): NativeRequestInit {
+  const headers = new Headers(prepared.init.headers);
+  const options: NativeRequestInit = { ...prepared.init, headers, signal };
+  if (!native || prepared.contract.behavior === "read_only") return options;
+
+  // Fetch can resend a reusable request body on HTTP 421. A stream has no reusable source.
+  // Include an empty stream for bodyless writes and preserve the exact prepared UTF-8 length.
+  const bytes = new TextEncoder().encode(prepared.init.body ?? "");
+  headers.set("Content-Length", String(bytes.byteLength));
+  options.duplex = "half";
+  options.body = new ReadableStream<Uint8Array>({
+    start(controller) {
+      if (bytes.byteLength) controller.enqueue(bytes);
+      controller.close();
+    },
+  });
+  return options;
+}
+
 async function execute(fetchRequest: typeof globalThis.fetch, invocation: Invocation, caller: AbortSignal | undefined,
-  limit: number, onDispatch?: () => void): Promise<HttpTransportResponse> {
+  limit: number, useNativeFetch: boolean, onDispatch?: () => void): Promise<HttpTransportResponse> {
   const { prepared, operation, deadlineAt, timeout } = invocation;
   const controller = new AbortController();
   const cancellation = caller && AbortSignal.any([caller]);
@@ -140,10 +164,9 @@ async function execute(fetchRequest: typeof globalThis.fetch, invocation: Invoca
   async function receive() {
     let response: Response;
     try {
+      const options = fetchOptions(prepared, controller.signal, useNativeFetch);
       onDispatch?.();
-      response = await fetchRequest(prepared.url, {
-        ...prepared.init, headers: new Headers(prepared.init.headers), signal: controller.signal,
-      });
+      response = await fetchRequest(prepared.url, options);
       if (!(response instanceof Response) || response.status < 100) throw new TypeError();
       if (controller.signal.aborted) {
         discardBody(response);
