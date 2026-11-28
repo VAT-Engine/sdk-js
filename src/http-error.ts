@@ -28,6 +28,12 @@ const messages = {
   rate_limit: "VAT Engine rate limit exceeded",
   server: "VAT Engine reported a server error",
   http: "VAT Engine returned an HTTP error",
+  context_unverified: "VAT Engine credential context could not be verified",
+  context_mismatch: "VAT Engine credential context differs from the trusted binding",
+  context_scope: "VAT Engine credential does not have a scope required by this operation",
+  context_environment: "VAT Engine operation is unavailable in the verified credential environment",
+  circuit_open: "VAT Engine circuit is open for this credential and deployment",
+  unknown_outcome: "VAT Engine may have processed this request. Reconcile the original request before resubmitting",
 } as const;
 
 export type HttpErrorKind = keyof typeof messages;

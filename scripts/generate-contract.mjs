@@ -163,6 +163,11 @@ const operations = Object.fromEntries(Object.keys(catalog).sort().map((identity)
   });
   return [identity, {
     authentication: entry.authentication,
+    behavior: entry.behavior,
+    contextAssertion: entry.contextAssertion,
+    scopes: entry.scopes,
+    environments: entry.environments,
+    retryClass: entry.retryClass,
     bodyRequired: entry.request.bodyRequired,
     requiredParameters,
     request: mediaShapes(body.content),

@@ -4,6 +4,11 @@ import type { OperationShape, WireShape } from "../wire-schema.js";
 export const operations: Readonly<Record<string, OperationShape>> = {
   "GET /health": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -33,6 +38,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /ready": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -76,6 +86,19 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/auth/context": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only",
+      "calculate-only",
+      "classification-resolve"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -208,6 +231,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/classification-codes/{scheme}/{code}": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "path:code",
@@ -281,6 +309,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/compliance/threshold-status": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -385,6 +424,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/information/customer-vat/article59c": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:year"
@@ -471,6 +521,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/information/customer-vat/attention": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -546,6 +607,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/information/customer-vat/events": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -670,6 +742,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/information/customer-vat/ioss": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -788,6 +871,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/information/customer-vat/oss": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -906,6 +1000,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/information/customer-vat/rules": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -1010,6 +1115,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/information/vat": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:code",
@@ -1113,6 +1229,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/country-vat-breakdown": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -1245,6 +1372,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/country-vat-breakdown/export": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:format",
@@ -1387,6 +1525,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/filing-prep": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -1493,6 +1642,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/locked-return-periods/union-oss": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -1597,6 +1757,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/locked-return-periods/union-oss/exports/{exportID}": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "path:exportID"
@@ -1722,6 +1893,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/multi-jurisdiction": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -1854,6 +2036,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/oss-accountant-report": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -1986,6 +2179,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/oss-quarterly-summary": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -2118,6 +2322,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/reports/oss-quarterly-summary/export": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:format",
@@ -2260,6 +2475,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/sources": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -2364,6 +2590,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/sources/unknown": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -2470,6 +2707,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/supplies": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -2624,6 +2871,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/supplies/{id}": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "path:id"
@@ -2747,6 +3004,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/tax-classes": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -2812,6 +3074,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/tax-classes/{id}": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "path:id"
@@ -2882,6 +3149,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/tax-registrations": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -2986,6 +3264,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/transactions": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -3120,6 +3409,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/transactions/aggregated": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -3259,6 +3559,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/transactions/export": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:from",
@@ -3393,6 +3704,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/transactions/{id}": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "path:id"
@@ -3493,6 +3815,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/vat/rates": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [
       "query:country",
@@ -3644,6 +3977,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/vat/sme-thresholds": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -3718,6 +4056,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "GET /v1/vat/thresholds": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": false,
     "requiredParameters": [],
     "request": {},
@@ -3768,6 +4111,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "PATCH /v1/sources/{id}": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [
       "path:id"
@@ -3906,6 +4259,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "PATCH /v1/tax-registrations/{id}": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [
       "path:id"
@@ -4044,6 +4407,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /agent/auth": {
     "authentication": "anonymous",
+    "behavior": "mutation",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "registration_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4129,6 +4497,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /agent/auth/claim": {
     "authentication": "claim_token",
+    "behavior": "credential_read",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "claim_polling",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4212,6 +4585,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/customer-vat/classification": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4321,6 +4704,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/customer-vat/oss-context": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4430,6 +4823,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/customer-vat/provisional-rate": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4550,6 +4953,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/customer-vat/reprocess": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4659,6 +5072,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/customer-vat/retire": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4768,6 +5191,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/customer-vat/select": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4877,6 +5310,18 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/tax-class/resolve": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only",
+      "classification-resolve"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -4970,6 +5415,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/information/vat/calculate": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -5215,6 +5671,15 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/reports/locked-return-periods/union-oss": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -5347,6 +5812,15 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/reports/locked-return-periods/union-oss/filed": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": false,
     "requiredParameters": [
       "query:period"
@@ -5466,6 +5940,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/sources": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -5585,6 +6069,15 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/supplies": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational"
+    ],
+    "retryClass": "supply_conditional",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -5766,6 +6259,16 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/tax-registrations": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "mutation_no_retry",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -5885,6 +6388,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/vat/calculate": {
     "authentication": "api_key",
+    "behavior": "mutation",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "calculate-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "calculation_conditional",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -6042,6 +6556,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/vat/sme-eligibility": {
     "authentication": "anonymous",
+    "behavior": "read_only",
+    "contextAssertion": false,
+    "scopes": [],
+    "environments": null,
+    "retryClass": "read_candidate",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {
@@ -6114,6 +6633,17 @@ export const operations: Readonly<Record<string, OperationShape>> = {
   },
   "POST /v1/vat/threshold-check": {
     "authentication": "api_key",
+    "behavior": "read_only",
+    "contextAssertion": true,
+    "scopes": [
+      "full",
+      "read-only"
+    ],
+    "environments": [
+      "operational",
+      "sandbox"
+    ],
+    "retryClass": "read_candidate",
     "bodyRequired": true,
     "requiredParameters": [],
     "request": {

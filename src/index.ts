@@ -6,3 +6,6 @@ export type { HttpParameter, HttpRequestOptions } from "./http-request.js";
 export type { HttpTransportResponse } from "./http-response.js";
 export { VatTransportError } from "./http-error.js";
 export type { HttpErrorKind, HttpResponseMetadata, ServerErrorFields } from "./http-error.js";
+export { createVatClient, UnknownOutcomeError } from "./vat-client.js";
+export type { AuthContext, TrustedContextBinding, VatClient, VatClientOptions } from "./vat-client.js";
+export type { CircuitOptions, RetryOptions } from "./resilience.js";
