@@ -37,6 +37,23 @@ The client makes up to three attempts within one overall deadline. It retries on
 
 The circuit breaker opens after five failed logical calls by default. After a 30-second cooldown it admits one recovery call at a time. Breaker state is isolated to the client destination and credential generation. Rate limits and business errors do not count as infrastructure failures.
 
+## CORE methods
+
+```js
+import { createVatClient } from "@vat-engine/sdk";
+
+const client = createVatClient();
+const { data, metadata } = await client.system.health();
+```
+
+The [method map](contract/js-methods.json) lists all public calls by module and method. Call options use the declared `path`, `query`, `headers` and `body` groups. TypeScript consumers can import `ApiInput<"module.method">` and `ApiResult<"module.method">`. Each result retains HTTP metadata. Use its `kind` to distinguish structured JSON from raw bytes on operations that offer both.
+
+`information.previewVat` requests an informational preview. `vat.calculateAndPersist` persists a calculation through the API. `supplies.commit` submits committed supply evidence, and the filing methods distinguish preparation, locking and recording a filed period. Supply references are trimmed using backend-compatible whitespace rules and checked against the 160-byte UTF-8 limit. A correction requires an event reference and an original sale UUID.
+
+Call `auth.startAgentRegistration` and `auth.claimAgentApiKey` explicitly. Treat registration tokens and claimed keys as sensitive data. Claiming a key leaves credential rotation under caller control.
+
+Native requests for mutations and credential claims use a one-shot body for each permitted attempt, including writes with an empty body. This prevents Fetch's HTTP 421 connection recovery from repeating them outside the SDK retry policy. Injected Fetch adapters are trusted to preserve the same dispatch semantics.
+
 ## Build and verify
 
 Use npm 11.20.0 with a supported Node.js version and the public checkout. The local tests use OpenSSL to generate an ephemeral certificate for TLS rejection testing.

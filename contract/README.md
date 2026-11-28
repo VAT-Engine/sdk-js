@@ -7,7 +7,7 @@ This bundle is the offline input for SDK contract work. [The manifest](manifest.
 | [OpenAPI](openapi.yaml) and [allowlist](allowlist.txt) | Public wire contract and sorted HTTP method/path identities |
 | [Policy](policy.json) | Reviewed access, data environments, business effects and replay conditions by operation |
 | [Operation catalog](operations.json) | Generated request and response metadata, pagination, context assertions and fixture links |
-| [JS method map](js-methods.json) | One proposed JS module/method per operation, keyed to its catalog contract check. Names remain provisional. |
+| [JS method map](js-methods.json) | One public JS module method per operation, keyed to its catalog contract check. |
 | [Conformance corpus](fixtures/README.md) | Language-neutral synthetic exchanges and exact response bytes |
 
 ## Offline verification

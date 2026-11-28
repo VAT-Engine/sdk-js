@@ -208,11 +208,54 @@ const wireSchemas = Object.fromEntries([...schemas.keys()].sort().map((key) => [
 const banner = "// Generated from the pinned public OpenAPI. Run npm run generate.\n";
 const counts = Object.fromEntries([...numericKinds.values()].map((kind) =>
   [kind, [...classified.values()].filter((value) => value === kind).length]));
+const mapping = JSON.parse(readFileSync(relative("../contract/js-methods.json"), "utf8"));
+assert.equal(mapping.formatVersion, 1);
+assert.equal(mapping.status, "finalized");
+assert.deepEqual(Object.keys(mapping.methods).sort(), generatedOperations);
+assert.equal(new Set(Object.values(mapping.methods)).size, generatedOperations.length);
+
+const groups = new Map();
+for (const operation of generatedOperations) {
+  const [method, path] = operation.split(" ");
+  const name = mapping.methods[operation];
+  assert(/^[a-z][A-Za-z0-9]*\.[a-z][A-Za-z0-9]*$/u.test(name));
+  const [group, member] = name.split(".");
+  const success = Object.entries(catalog[operation].responses).filter(([status]) => /^2\d{2}$/u.test(status));
+  assert(success.length > 0, `Missing documented success response for ${operation}`);
+  const bytes = success.flatMap(([status, response]) => Object.entries(response.media)
+    .filter(([, mode]) => mode === "bytes").map(([media]) => JSON.stringify(`${status} ${media}`)));
+  const params = [JSON.stringify(path), JSON.stringify(method.toLowerCase()), ...bytes.length ? [bytes.join(" | ")] : []].join(", ");
+  const summary = spec.paths[path][method.toLowerCase()].summary?.replaceAll("*/", "* /").replace(/\s+/gu, " ");
+  const entries = groups.get(group) ?? [];
+  entries.push({ member, params, operation, summary });
+  groups.set(group, entries);
+}
+const orderedGroups = [...groups.keys()].sort().map((group) => [group, groups.get(group)
+  .sort((a, b) => a.member < b.member ? -1 : a.member > b.member ? 1 : 0)]);
+const moduleTypes = orderedGroups.map(([group, entries]) => [
+  `  readonly ${group}: {`,
+  ...entries.flatMap(({ member, params, summary }) => [
+    ...(summary ? [`    /** ${summary} */`] : []),
+    `    readonly ${member}: CoreMethod<${params}>;`,
+  ]),
+  "  };",
+].join("\n")).join("\n");
+const moduleBindings = orderedGroups.map(([group, entries]) => [
+  `    ${group}: Object.freeze({`,
+  ...entries.map(({ member, params, operation }) =>
+    `      ${member}: bindOperation<${params}>(dispatch, ${JSON.stringify(operation)}),`),
+  "    }),",
+].join("\n")).join("\n");
 const files = {
   "operations.ts": banner + astToString(operationsAst),
   "wire.ts": banner + 'import type { OperationShape, WireShape } from "../wire-schema.js";\n\n' +
     `export const operations: Readonly<Record<string, OperationShape>> = ${JSON.stringify(operations, null, 2)};\n\n` +
     `export const schemas: Readonly<Record<string, WireShape>> = ${JSON.stringify(wireSchemas, null, 2)};\n`,
+  "api-modules.ts": banner + '// Public names come from contract/js-methods.json.\n' +
+    'import { bindOperation } from "../core-api.js";\n' +
+    'import type { CoreDispatch, CoreMethod } from "../core-api.js";\n\n' +
+    `export interface ApiModules {\n${moduleTypes}\n}\n\n` +
+    `export function createApiModules(dispatch: CoreDispatch): ApiModules {\n  return {\n${moduleBindings}\n  };\n}\n`,
 };
 for (const [name, contents] of Object.entries(files)) {
   const path = relative(`../src/generated/${name}`);

@@ -430,13 +430,14 @@ def verify(bundle, js_map=None):
     operations = parse_json(files["operations.json"])["operations"]
     if js_map:
         mappings = parse_json(js_map.read_bytes())
-        require(mappings["formatVersion"] == 1 and mappings["status"] == "proposed", "invalid JS mapping header")
+        require(mappings["formatVersion"] == 1 and mappings["status"] in {"proposed", "finalized"},
+                "invalid JS mapping header")
         methods = mappings["methods"]
         require(set(methods) == set(operations), "JS method coverage drift")
         candidates = list(methods.values())
         require(len(set(candidates)) == len(candidates) and
                 all(re.fullmatch(r"[a-z][A-Za-z0-9]*\.[a-z][A-Za-z0-9]*", name) for name in candidates),
-                "invalid or duplicate JS method proposal")
+                "invalid or duplicate JS method")
     return spec, operations, manifest, counts
 
 

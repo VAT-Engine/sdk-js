@@ -9,3 +9,4 @@ export type { HttpErrorKind, HttpResponseMetadata, ServerErrorFields } from "./h
 export { createVatClient, UnknownOutcomeError } from "./vat-client.js";
 export type { AuthContext, TrustedContextBinding, VatClient, VatClientOptions } from "./vat-client.js";
 export type { CircuitOptions, RetryOptions } from "./resilience.js";
+export type { ApiInput, ApiMethodName, ApiResult } from "./api-types.js";

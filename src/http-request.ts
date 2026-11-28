@@ -1,5 +1,6 @@
 import { encodeRequestJson, encodeScalar } from "./exact-json.js";
 import { operations } from "./generated/wire.js";
+import { normalizeSupplyReferences } from "./supply-references.js";
 import type { OperationShape } from "./wire-schema.js";
 
 export type HttpParameter = string | number | bigint | boolean;
@@ -95,7 +96,9 @@ export function prepareRequest(base: string, key: string | undefined, operation:
     if (!contract.contextAssertion || headers.has("X-VAT-Expected-Context")) throw new TypeError();
     headers.set("X-VAT-Expected-Context", expectedContext);
   }
-  const body = input === undefined ? undefined : encodeRequestJson(operation, "application/json", input);
+  const body = input === undefined ? undefined : encodeRequestJson(
+    operation, "application/json", operation === "POST /v1/supplies" ? normalizeSupplyReferences(input) : input,
+  );
   if (body !== undefined) headers.set("Content-Type", "application/json");
   const init = Object.freeze({
     method, headers: Object.freeze(Object.fromEntries(headers)), redirect: "manual", credentials: "omit",

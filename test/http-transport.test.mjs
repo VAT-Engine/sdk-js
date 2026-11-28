@@ -22,6 +22,10 @@ const exampleKey = "fixture-api-key";
 const json = "application/json";
 const { AbortController, ReadableStream, Response } = globalThis;
 
+function supplyBody() {
+  return decodeRequestJson("POST /v1/supplies", json, fixture("supply-replay").exchanges[0].request.body);
+}
+
 async function listen(t, server) {
   await new Promise((resolve, reject) => {
     server.once("error", reject);
@@ -254,7 +258,7 @@ test("blocks same-origin redirects and cross-origin forwarding of API keys and r
   });
   const client = createHttpTransport({ ...await local(t, source.handler), apiKey: exampleKey });
   for (const status of [307, 308, 302]) {
-    await assert.rejects(client.request("POST /v1/supplies", { body: { example: "fixture-sensitive" } }), (error) => {
+    await assert.rejects(client.request("POST /v1/supplies", { body: { ...supplyBody(), example: "fixture-sensitive" } }), (error) => {
       typed("redirect", status)(error);
       assert.deepEqual(error.getResponseMetadata(), { status });
       return true;
@@ -499,7 +503,7 @@ test("network loss and raw Fetch causes are sanitized without replay", async (t)
     calls++;
     req.socket.destroy();
   }));
-  await assert.rejects(client.request("POST /v1/supplies", { body: {} }), typed("network"));
+  await assert.rejects(client.request("POST /v1/supplies", { body: supplyBody() }), typed("network"));
   assert.equal(calls, 1);
   const boom = createHttpTransport({ fetch: async () => { throw new Error("fixture-sensitive-url"); } });
   await assert.rejects(boom.request("GET /health"), (error) => {
@@ -529,6 +533,7 @@ test("deadline includes synchronous request preparation and prevents a late disp
   let calls = 0;
   const client = createHttpTransport({ fetch: async () => { calls++; throw new Error(); } });
   const body = {
+    ...supplyBody(),
     get example() {
       Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);
       return true;
