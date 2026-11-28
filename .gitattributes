@@ -1,0 +1,3 @@
+contract/** text eol=lf
+contract/openapi.yaml -text
+contract/fixtures/payloads/** -text -diff
