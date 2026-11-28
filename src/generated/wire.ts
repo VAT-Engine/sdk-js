@@ -3,6 +3,9 @@ import type { OperationShape, WireShape } from "../wire-schema.js";
 
 export const operations: Readonly<Record<string, OperationShape>> = {
   "GET /health": {
+    "authentication": "anonymous",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {},
     "responses": {
@@ -29,6 +32,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /ready": {
+    "authentication": "anonymous",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {},
     "responses": {
@@ -69,6 +75,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/auth/context": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -198,6 +207,12 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/classification-codes/{scheme}/{code}": {
+    "authentication": "anonymous",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "path:code",
+      "path:scheme"
+    ],
     "request": {},
     "parameters": {
       "path:code": {
@@ -265,6 +280,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/compliance/threshold-status": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -366,6 +384,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/information/customer-vat/article59c": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:year"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -447,6 +470,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/information/customer-vat/attention": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -519,6 +545,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/information/customer-vat/events": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -640,6 +669,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/information/customer-vat/ioss": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -753,6 +787,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/information/customer-vat/oss": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -866,6 +905,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/information/customer-vat/rules": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -967,6 +1009,14 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/information/vat": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:code",
+      "query:country",
+      "query:date",
+      "query:scheme"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1062,6 +1112,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/country-vat-breakdown": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1189,6 +1244,12 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/country-vat-breakdown/export": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:format",
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1325,6 +1386,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/filing-prep": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1426,6 +1492,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/locked-return-periods/union-oss": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1527,6 +1596,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/locked-return-periods/union-oss/exports/{exportID}": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "path:exportID"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1647,6 +1721,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/multi-jurisdiction": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1774,6 +1853,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/oss-accountant-report": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -1901,6 +1985,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/oss-quarterly-summary": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2028,6 +2117,12 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/reports/oss-quarterly-summary/export": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:format",
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2164,6 +2259,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/sources": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2265,6 +2363,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/sources/unknown": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2368,6 +2469,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/supplies": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2519,6 +2623,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/supplies/{id}": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "path:id"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2637,6 +2746,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/tax-classes": {
+    "authentication": "anonymous",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "query:at": {
@@ -2699,6 +2811,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/tax-classes/{id}": {
+    "authentication": "anonymous",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "path:id"
+    ],
     "request": {},
     "parameters": {
       "path:id": {
@@ -2764,6 +2881,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/tax-registrations": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2865,6 +2985,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/transactions": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -2996,6 +3119,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/transactions/aggregated": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -3132,6 +3258,12 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/transactions/export": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:from",
+      "query:to"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -3260,6 +3392,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/transactions/{id}": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "path:id"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -3355,6 +3492,12 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/vat/rates": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:country",
+      "query:tax_class_id"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -3500,6 +3643,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/vat/sme-thresholds": {
+    "authentication": "anonymous",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "query:country": {
@@ -3571,6 +3717,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "GET /v1/vat/thresholds": {
+    "authentication": "anonymous",
+    "bodyRequired": false,
+    "requiredParameters": [],
     "request": {},
     "parameters": {
       "query:country": {
@@ -3618,6 +3767,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "PATCH /v1/sources/{id}": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [
+      "path:id"
+    ],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -3751,6 +3905,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "PATCH /v1/tax-registrations/{id}": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [
+      "path:id"
+    ],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -3884,6 +4043,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /agent/auth": {
+    "authentication": "anonymous",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "object",
@@ -3966,6 +4128,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /agent/auth/claim": {
+    "authentication": "claim_token",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "object",
@@ -4046,6 +4211,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/customer-vat/classification": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -4152,6 +4320,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/customer-vat/oss-context": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -4258,6 +4429,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/customer-vat/provisional-rate": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "object",
@@ -4375,6 +4549,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/customer-vat/reprocess": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -4481,6 +4658,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/customer-vat/retire": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -4587,6 +4767,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/customer-vat/select": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -4693,6 +4876,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/tax-class/resolve": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -4783,6 +4969,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/information/vat/calculate": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -5025,6 +5214,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/reports/locked-return-periods/union-oss": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -5152,6 +5346,11 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/reports/locked-return-periods/union-oss/filed": {
+    "authentication": "api_key",
+    "bodyRequired": false,
+    "requiredParameters": [
+      "query:period"
+    ],
     "request": {},
     "parameters": {
       "header:X-VAT-Expected-Context": {
@@ -5266,6 +5465,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/sources": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -5382,6 +5584,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/supplies": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -5560,6 +5765,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/tax-registrations": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -5676,6 +5884,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/vat/calculate": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -5830,6 +6041,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/vat/sme-eligibility": {
+    "authentication": "anonymous",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",
@@ -5899,6 +6113,9 @@ export const operations: Readonly<Record<string, OperationShape>> = {
     }
   },
   "POST /v1/vat/threshold-check": {
+    "authentication": "api_key",
+    "bodyRequired": true,
+    "requiredParameters": [],
     "request": {
       "application/json": {
         "kind": "ref",

@@ -74,6 +74,15 @@ function checkedNumber(value: unknown, shape: NumericShape): number | bigint | n
   return value;
 }
 
+export function encodeScalar(value: unknown, schema: WireShape): string {
+  const shape = resolved(schema);
+  if (isNumeric(shape) && value !== null) return String(checkedNumber(value, shape));
+  if ((shape.kind === "string" || shape.kind === "boolean") && typeof value === shape.kind) {
+    return String(value);
+  }
+  throw new TypeError("Invalid wire parameter");
+}
+
 function checkNativeJson(): void {
   if (typeof nativeJson.rawJSON !== "function" || typeof nativeJson.isRawJSON !== "function") {
     throw new Error("This Node runtime does not support exact JSON");

@@ -133,14 +133,24 @@ const operations = Object.fromEntries(Object.keys(catalog).sort().map((identity)
   const [method, path] = identity.split(" ");
   const item = spec.paths[path];
   const operation = item[method.toLowerCase()];
+  const entry = catalog[identity];
+  const body = dereference(operation.requestBody ?? {});
   const parameters = Object.fromEntries(
     [...(item.parameters ?? []), ...(operation.parameters ?? [])].map(dereferenceParameter),
   );
   function dereferenceParameter(value) {
     const parameter = dereference(value);
     assert(parameter.schema && !parameter.content, "Review parameter content before generation");
-    return [`${parameter.in}:${parameter.name}`, shape(parameter.schema)];
+    return [`${parameter.in}:${parameter.name}`, {
+      schema: shape(parameter.schema), required: parameter.required === true,
+    }];
   }
+  assert.deepEqual(Object.keys(parameters).sort(), Object.keys(entry.request.parameters).sort());
+  const requiredParameters = Object.keys(parameters).sort().filter((key) => parameters[key].required);
+  assert.deepEqual(requiredParameters, Object.keys(entry.request.parameters).sort()
+    .filter((key) => entry.request.parameters[key].required));
+  assert(["anonymous", "api_key", "claim_token"].includes(entry.authentication));
+  assert.equal(body.required === true, entry.request.bodyRequired);
   const responses = mapValues(operation.responses, (value, status) => {
     const response = dereference(value);
     const content = mediaShapes(response.content);
@@ -152,8 +162,11 @@ const operations = Object.fromEntries(Object.keys(catalog).sort().map((identity)
     return { content, headers };
   });
   return [identity, {
-    request: mediaShapes(dereference(operation.requestBody ?? {}).content),
-    parameters: mapValues(parameters, (value) => value),
+    authentication: entry.authentication,
+    bodyRequired: entry.request.bodyRequired,
+    requiredParameters,
+    request: mediaShapes(body.content),
+    parameters: mapValues(parameters, (parameter) => parameter.schema),
     responses,
   }];
 }));
