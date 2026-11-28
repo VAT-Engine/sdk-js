@@ -21,6 +21,22 @@ The transport accepts exact method and path templates from the pinned CORE contr
 
 `VatTransportError` exposes a stable `kind` and the received HTTP status when available. Call `getServerError()` or `getResponseMetadata()` when the application needs the server-provided fields. These fields may contain sensitive information. The error message, stack, inspection and JSON serialization omit them. An injected Fetch implementation must honor manual redirects and maintain TLS verification.
 
+## Context protection and retries
+
+Use `createVatClient()` for the context-aware client. `getAuthContext()` explicitly reads the authenticated context. Ordinary mode leaves scope, environment and assertion decisions to the API. A valid key for an unintended account can still authorize writes in ordinary mode.
+
+To opt in to strict context protection, supply `strictContext: { baseUrl, contextId, environment }` from independent, trusted enrollment. The binding includes the exact deployment base path. Supply the candidate API key separately. The SDK checks the candidate with the context endpoint before each protected dispatch, compares its context, environment and scope, then sends the trusted assertion with the operation. A failed preflight sends zero business requests. The separate assertion is evaluated by the API when it receives a request. Strict behavior and assertion precedence have local evidence only. Authenticated hosted acceptance is required before claiming hosted readiness.
+
+`rotateApiKey()` selects a candidate for subsequent calls. Strict mode verifies that candidate before protected use. In-flight calls keep their original key, destination, semantic headers and exact body bytes. `revokeApiKey()` cancels active local use of current and previous keys and clears the current key. Server-side revocation is a separate action.
+
+The client makes up to three attempts within one overall deadline. It retries only reviewed read operations and conditionally replayable writes on network failures, attempt timeouts, or HTTP 408, 429, 502, 503 and 504. Backoff uses exponential jitter with a 100 ms initial ceiling and 2 s cap by default. A valid `Retry-After` is honored when it fits the remaining deadline and any applicable replay window. A mutation cannot start a retry more than 30 seconds into the invocation. This client limit is independent of the API's retention policy. Pass `retry: false` for a single business attempt.
+
+- VAT calculation replay requires an explicit transaction date and valid idempotency key. The original source attribution, including omission, and exact request body stay fixed.
+- Supply replay requires fixed identity, revision and original-sale binding for corrections. Both supplier establishment and dispatch must be explicit so Source Profile defaults cannot change an uncommitted submission on replay.
+- Registration, claim and other mutations have a single automatic attempt. Review the original request if `UnknownOutcomeError` is returned. The previous attempt may have been processed.
+
+The circuit breaker opens after five failed logical calls by default. After a 30-second cooldown it admits one recovery call at a time. Breaker state is isolated to the client destination and credential generation. Rate limits and business errors do not count as infrastructure failures.
+
 ## Build and verify
 
 Use npm 11.20.0 with a supported Node.js version and the public checkout. The local tests use OpenSSL to generate an ephemeral certificate for TLS rejection testing.

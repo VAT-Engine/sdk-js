@@ -14,6 +14,7 @@ const expected = [
   "dist/exact-json.js", "dist/wire-schema.d.ts", "dist/generated/wire.js",
   "dist/http-transport.js", "dist/http-transport.d.ts", "dist/http-request.js", "dist/http-request.d.ts",
   "dist/http-response.js", "dist/http-response.d.ts", "dist/http-error.js", "dist/http-error.d.ts",
+  "dist/vat-client.js", "dist/vat-client.d.ts", "dist/resilience.js", "dist/resilience.d.ts",
 ].sort();
 const tsc = join(root, "node_modules/typescript/bin/tsc");
 const npm = process.env.npm_execpath;
@@ -71,7 +72,7 @@ try {
   runNpm(["install", "--offline", "--ignore-scripts", "--no-audit", "--no-fund", tarball], consumer);
   writeFileSync(join(consumer, "esm.mjs"), `
 import assert from "node:assert/strict";
-import { createHttpTransport, toInt64 } from "@vat-engine/sdk";
+import { createHttpTransport, createVatClient, toInt64 } from "@vat-engine/sdk";
 assert.equal(toInt64(9223372036854775807n), 9223372036854775807n);
 assert.throws(() => toInt64(9007199254740992), RangeError);
 const client = createHttpTransport({
@@ -84,6 +85,19 @@ const client = createHttpTransport({
 const response = await client.request("GET /health");
 assert.equal(response.kind, "json");
 assert.equal(response.data.status, "ok");
+const contextId = "ctx_" + "a".repeat(64);
+const resilient = createVatClient({
+  apiKey: "fixture-only-key",
+  strictContext: { baseUrl: "https://api.vat-engine.app", contextId, environment: "sandbox" },
+  fetch: async (url, init) => {
+    assert.equal(url, "https://api.vat-engine.app/v1/auth/context");
+    assert.equal(init.headers.get("X-VAT-Expected-Context"), contextId);
+    return new Response(JSON.stringify({ context_id: contextId, environment: "sandbox", scopes: ["full"] }), {
+      headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "X-VAT-Environment": "sandbox" },
+    });
+  },
+});
+assert.equal((await resilient.getAuthContext()).contextId, contextId);
 `);
   writeFileSync(join(consumer, "cjs.cjs"), `
 const assert = require("node:assert/strict");
@@ -94,6 +108,8 @@ async function check() {
   const esm = await import("@vat-engine/sdk");
   assert.equal(sdk.toInt64, esm.toInt64);
   assert.equal(sdk.createHttpTransport, esm.createHttpTransport);
+  assert.equal(sdk.createVatClient, esm.createVatClient);
+  assert.equal(sdk.UnknownOutcomeError, esm.UnknownOutcomeError);
   const client = sdk.createHttpTransport({ fetch: async () => new Response("fixture", { status: 503 }) });
   await assert.rejects(client.request("GET /health"), {
     name: "VatTransportError", kind: "server", status: 503,
@@ -116,6 +132,7 @@ const value: sdk.Int64Input = 42;
 const bigint: bigint = sdk.toInt64(value);
 const params: sdk.HttpRequestOptions = { query: { limit: 1 } };
 const response: Promise<sdk.HttpTransportResponse> = sdk.createHttpTransport().request("GET /v1/transactions", params);
+const context: Promise<sdk.AuthContext> = sdk.createVatClient({ retry: false }).getAuthContext();
 `);
   for (const entry of ["esm.mjs", "cjs.cjs"]) capture(process.execPath, [entry], consumer);
   capture(process.execPath, [

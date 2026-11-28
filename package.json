@@ -35,7 +35,11 @@
     "dist/http-error.d.ts",
     "dist/exact-json.js",
     "dist/wire-schema.d.ts",
-    "dist/generated/wire.js"
+    "dist/generated/wire.js",
+    "dist/vat-client.js",
+    "dist/vat-client.d.ts",
+    "dist/resilience.js",
+    "dist/resilience.d.ts"
   ],
   "scripts": {
     "generate": "node scripts/generate-contract.mjs",

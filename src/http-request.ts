@@ -16,7 +16,10 @@ export interface HttpRequestOptions {
 
 export interface PreparedRequest {
   readonly url: string;
-  readonly init: RequestInit;
+  readonly init: Readonly<Omit<RequestInit, "headers" | "body"> & {
+    readonly headers: Readonly<Record<string, string>>;
+    readonly body?: string;
+  }>;
   readonly contract: OperationShape;
 }
 
@@ -59,7 +62,7 @@ function parameterValues(contract: OperationShape, options: HttpRequestOptions):
 }
 
 export function prepareRequest(base: string, key: string | undefined, operation: string,
-  options: HttpRequestOptions): PreparedRequest {
+  options: HttpRequestOptions, expectedContext?: string): PreparedRequest {
   if (typeof operation !== "string" || !Object.hasOwn(operations, operation)) throw new TypeError();
   const contract = operations[operation]!;
   const split = operation.indexOf(" ");
@@ -88,12 +91,15 @@ export function prepareRequest(base: string, key: string | undefined, operation:
   }
   const input = options.body;
   if (input === undefined && contract.bodyRequired) throw new TypeError();
-  const init: RequestInit = {
-    method, headers, redirect: "manual", credentials: "omit", referrerPolicy: "no-referrer", cache: "no-store",
-  };
-  if (input !== undefined) {
-    init.body = encodeRequestJson(operation, "application/json", input);
-    headers.set("Content-Type", "application/json");
+  if (expectedContext !== undefined && contract.authentication === "api_key") {
+    if (!contract.contextAssertion || headers.has("X-VAT-Expected-Context")) throw new TypeError();
+    headers.set("X-VAT-Expected-Context", expectedContext);
   }
-  return { url: url.href, init, contract };
+  const body = input === undefined ? undefined : encodeRequestJson(operation, "application/json", input);
+  if (body !== undefined) headers.set("Content-Type", "application/json");
+  const init = Object.freeze({
+    method, headers: Object.freeze(Object.fromEntries(headers)), redirect: "manual", credentials: "omit",
+    referrerPolicy: "no-referrer", cache: "no-store", ...(body === undefined ? {} : { body }),
+  } as const);
+  return Object.freeze({ url: url.href, init, contract });
 }

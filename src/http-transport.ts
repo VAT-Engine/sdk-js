@@ -29,49 +29,83 @@ function boundedInteger(value: number, maximum: number): number {
   return value;
 }
 
+export interface Invocation {
+  readonly operation: string;
+  readonly prepared: PreparedRequest;
+  readonly caller: AbortSignal | undefined;
+  readonly startedAt: number;
+  readonly deadlineAt: number;
+  readonly timeout: number;
+}
+
+export interface TransportRuntime {
+  readonly base: string;
+  readonly apiKey: string | undefined;
+  capture(operation: string, options: HttpRequestOptions, key: string | undefined,
+    expectedContext?: string): Invocation;
+  send(invocation: Invocation, caller?: AbortSignal, onDispatch?: () => void): Promise<HttpTransportResponse>;
+}
+
+export function validateApiKey(key: string | undefined): void {
+  if (key !== undefined && (typeof key !== "string" || !/^[\x21-\x7e]{1,4096}$/u.test(key))) {
+    throw new VatTransportError("invalid_request");
+  }
+}
+
 export function createHttpTransport(options: HttpTransportOptions = {}): HttpTransport {
+  const runtime = createTransportRuntime(options);
+  return Object.freeze({
+    async request(operation: string, request: HttpRequestOptions = {}) {
+      return runtime.send(runtime.capture(operation, request, runtime.apiKey));
+    },
+  });
+}
+
+export function createTransportRuntime(options: HttpTransportOptions): TransportRuntime {
   try {
     const base = normalizeBase(options.baseUrl ?? defaultBase, options.allowInsecureLoopback === true);
-    const key = options.apiKey;
-    if (key !== undefined && (typeof key !== "string" || !/^[\x21-\x7e]{1,4096}$/u.test(key))) throw new TypeError();
+    const apiKey = options.apiKey;
+    validateApiKey(apiKey);
     const defaultTimeout = boundedInteger(options.timeoutMs ?? defaultBudgetMs, 2_147_483_647);
     const defaultDeadline = boundedInteger(options.deadlineMs ?? defaultBudgetMs, 2_147_483_647);
     const limit = boundedInteger(options.maxResponseBytes ?? defaultResponseLimit, 128 * 1024 * 1024);
     const fetchRequest = options.fetch ?? globalThis.fetch;
     if (typeof fetchRequest !== "function") throw new TypeError();
 
-    return Object.freeze({
-      async request(operation: string, request: HttpRequestOptions = {}): Promise<HttpTransportResponse> {
+    return {
+      base,
+      apiKey,
+      capture(operation, request, key, expectedContext) {
         const started = performance.now();
-        let prepared: PreparedRequest;
-        let callerSignal: AbortSignal | undefined;
-        let deadlineAt: number;
-        let timeout: number;
+        let caller: AbortSignal | undefined;
         try {
           const signal = request.signal;
           if (signal !== undefined && !(signal instanceof AbortSignal)) throw new TypeError();
-          callerSignal = signal;
-          if (callerSignal?.aborted) throw new TypeError();
-          deadlineAt = started + boundedInteger(request.deadlineMs ?? defaultDeadline, 2_147_483_647);
-          timeout = boundedInteger(request.timeoutMs ?? defaultTimeout, 2_147_483_647);
-          prepared = prepareRequest(base, key, operation, request);
+          caller = signal;
+          if (caller?.aborted) throw new TypeError();
+          const deadlineAt = started + boundedInteger(request.deadlineMs ?? defaultDeadline, 2_147_483_647);
+          const timeout = boundedInteger(request.timeoutMs ?? defaultTimeout, 2_147_483_647);
+          const prepared = prepareRequest(base, key, operation, request, expectedContext);
+          return Object.freeze({ prepared, operation, caller, startedAt: started, deadlineAt, timeout });
         } catch {
-          if (callerSignal?.aborted) throw new VatTransportError("aborted");
-          throw new VatTransportError("invalid_request");
+          throw new VatTransportError(caller?.aborted ? "aborted" : "invalid_request");
         }
-        return execute(fetchRequest, prepared, operation, callerSignal, deadlineAt, timeout, limit);
       },
-    });
+      send(invocation, caller = invocation.caller, onDispatch) {
+        return execute(fetchRequest, invocation, caller, limit, onDispatch);
+      },
+    };
   } catch {
     throw new VatTransportError("invalid_request");
   }
 }
 
-async function execute(fetchRequest: typeof globalThis.fetch, prepared: PreparedRequest, operation: string,
-  caller: AbortSignal | undefined, deadlineAt: number, timeoutMs: number, limit: number): Promise<HttpTransportResponse> {
+async function execute(fetchRequest: typeof globalThis.fetch, invocation: Invocation, caller: AbortSignal | undefined,
+  limit: number, onDispatch?: () => void): Promise<HttpTransportResponse> {
+  const { prepared, operation, deadlineAt, timeout } = invocation;
   const controller = new AbortController();
   const cancellation = caller && AbortSignal.any([caller]);
-  const timeoutAt = performance.now() + timeoutMs;
+  const timeoutAt = performance.now() + timeout;
   const cutoff = Math.min(deadlineAt, timeoutAt);
   const expiry = deadlineAt <= timeoutAt ? "deadline" : "timeout";
   let metadata: HttpResponseMetadata | undefined;
@@ -106,7 +140,10 @@ async function execute(fetchRequest: typeof globalThis.fetch, prepared: Prepared
   async function receive() {
     let response: Response;
     try {
-      response = await fetchRequest(prepared.url, { ...prepared.init, signal: controller.signal });
+      onDispatch?.();
+      response = await fetchRequest(prepared.url, {
+        ...prepared.init, headers: new Headers(prepared.init.headers), signal: controller.signal,
+      });
       if (!(response instanceof Response) || response.status < 100) throw new TypeError();
       if (controller.signal.aborted) {
         discardBody(response);
